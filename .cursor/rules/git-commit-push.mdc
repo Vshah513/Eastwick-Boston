@@ -1,0 +1,18 @@
+---
+description: Commit and push all changes to the Eastwick-Boston GitHub repo
+alwaysApply: true
+---
+
+# Git: commit and push every change
+
+This project's remote is `origin` → https://github.com/Vshah513/Eastwick-Boston.git on branch `main`.
+
+After finishing any set of file changes in this workspace:
+
+1. `git add -A`
+2. `git commit -m "<short summary of what changed>"`
+3. `git push origin main`
+
+- Never push to any other repository or branch.
+- Keep `node_modules/`, `.next/`, `.env*`, and build output out of commits (use `.gitignore`).
+- If the push fails (auth, conflicts), stop and tell the user instead of force-pushing.
