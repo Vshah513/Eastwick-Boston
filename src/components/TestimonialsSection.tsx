@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/lib/use-media-query";
 import ScrollReveal from "@/components/ScrollReveal";
 import { BUSINESS } from "@/lib/business";
 import { HAS_REVIEWS, OVERALL_RATING, REVIEWS, REVIEW_COUNT } from "@/content/reviews";
@@ -56,7 +56,7 @@ function ReviewCard({ review, hidden }: { review: Review; hidden?: boolean }) {
 
 export default function TestimonialsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const [isPaused, setIsPaused] = useState(false);
   const touchResumeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const marquee = !reduceMotion;

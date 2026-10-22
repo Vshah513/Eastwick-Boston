@@ -14,3 +14,12 @@ export function useMediaQuery(query: string): boolean {
     () => false
   );
 }
+
+/**
+ * The OS "reduce motion" setting, safe to branch rendering on: it is false
+ * while hydrating (matching the server HTML) and updates right after, unlike
+ * framer-motion's useReducedMotion, which differs on the first client render.
+ */
+export function usePrefersReducedMotion(): boolean {
+  return useMediaQuery("(prefers-reduced-motion: reduce)");
+}

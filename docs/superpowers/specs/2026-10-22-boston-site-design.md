@@ -215,3 +215,15 @@ Images go through `next/image` with explicit `sizes` and the default quality 75 
 - [ ] `LEGAL_LAST_UPDATED` set to the launch date
 - [ ] `showRaleighLink` decision
 - [ ] Dev TODO-check prints nothing. Test submissions in both consent states on production.
+
+## Addendum (2026-10-22): hero wipe upgraded to "Pro S-stroke on frosted glass"
+
+The user found the original straight-down wipe underwhelming and chose this direction:
+- The footage starts behind frosted glass (backdrop blur, water-spot rings, grain).
+- A realistic SVG squeegee cleans it in the pro "fanning" S-stroke: horizontal bands with pivoting U-turns, a wet sheen, water seams and drips.
+- It ends with a glint and sparkles, then unmounts. It plays once and is skipped under reduced motion.
+
+Code:
+- `src/components/hero/` contains `wipe-path.ts` (pure geometry), `Squeegee.tsx` and `GlassWipe.tsx`.
+- Reduced-motion checks now use the hydration-safe `usePrefersReducedMotion` in `src/lib/use-media-query.ts`.
+- Fraunces no longer loads the `opsz` axis, which saves ~70 KB of preloaded font.

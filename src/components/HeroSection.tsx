@@ -1,8 +1,9 @@
 "use client";
 
-import { animate, motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MediaFrame from "@/components/MediaFrame";
+import GlassWipe from "@/components/hero/GlassWipe";
 import { BUSINESS_LOCATION } from "@/lib/business";
 import { HERO } from "@/content/hero";
 import { STATS } from "@/content/stats";
@@ -12,175 +13,6 @@ import { HAS_REVIEWS, OVERALL_RATING, REVIEW_COUNT } from "@/content/reviews";
 const AUTOPLAY_FALLBACK_MS = 2500;
 /** Small pause after the clip starts so the dirty glass registers before the wipe. */
 const WIPE_DELAY_MS = 500;
-
-/* ───────────────────────────────────────────────────────
-   Squeegee-on-glass reveal, played once over the hero
-   video: dirty glass is wiped clean top to bottom, then
-   the layers unmount and the footage plays clean.
-   ─────────────────────────────────────────────────────── */
-function WindowWipe({ start }: { start: boolean }) {
-  const progress = useMotionValue(0);
-  const reduceMotion = useReducedMotion();
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (!start || reduceMotion) return;
-    const controls = animate(progress, 1, {
-      duration: 3,
-      ease: [0.3, 0.05, 0.25, 1],
-      onComplete: () => setDone(true),
-    });
-    return () => controls.stop();
-  }, [start, reduceMotion, progress]);
-
-  const dirtyClip = useTransform(progress, (p) => `inset(${p * 100}% 0% 0% 0%)`);
-  const squeegeeY = useTransform(progress, (p) => `${p * 100}%`);
-  const squeegeeOpacity = useTransform(progress, [0, 0.008, 0.96, 1], [0, 1, 1, 0]);
-
-  if (done || reduceMotion) return null;
-
-  return (
-    <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden>
-      {/* ───── DIRTY GLASS (clipped away by the squeegee) ───── */}
-      <motion.div className="absolute inset-0" style={{ clipPath: dirtyClip, willChange: "clip-path" }}>
-        {/* Fog / grime base */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              radial-gradient(ellipse 600px 400px at 18% 25%, rgba(110,112,110,0.5) 0%, transparent 70%),
-              radial-gradient(ellipse 500px 350px at 72% 55%, rgba(100,102,98,0.45) 0%, transparent 65%),
-              radial-gradient(ellipse 400px 300px at 45% 80%, rgba(105,106,100,0.4) 0%, transparent 60%),
-              radial-gradient(ellipse 350px 250px at 85% 15%, rgba(115,116,112,0.35) 0%, transparent 55%),
-              linear-gradient(180deg, rgba(62,64,62,0.6) 0%, rgba(52,54,52,0.68) 40%, rgba(58,60,58,0.6) 100%)
-            `,
-          }}
-        />
-        {/* Dried water spots */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              radial-gradient(circle 40px at 10% 18%, rgba(190,192,188,0.2) 0%, transparent 100%),
-              radial-gradient(circle 55px at 32% 42%, rgba(180,182,178,0.16) 0%, transparent 100%),
-              radial-gradient(circle 25px at 52% 12%, rgba(200,200,196,0.22) 0%, transparent 100%),
-              radial-gradient(circle 65px at 76% 50%, rgba(170,172,168,0.18) 0%, transparent 100%),
-              radial-gradient(circle 30px at 20% 68%, rgba(185,186,182,0.24) 0%, transparent 100%),
-              radial-gradient(circle 45px at 62% 78%, rgba(175,176,172,0.17) 0%, transparent 100%),
-              radial-gradient(circle 20px at 88% 30%, rgba(195,196,192,0.26) 0%, transparent 100%),
-              radial-gradient(circle 50px at 45% 90%, rgba(165,166,162,0.2) 0%, transparent 100%),
-              radial-gradient(circle 35px at 5% 50%, rgba(205,206,202,0.15) 0%, transparent 100%),
-              radial-gradient(circle 28px at 95% 72%, rgba(190,190,186,0.2) 0%, transparent 100%)
-            `,
-          }}
-        />
-        {/* Vertical water streaks */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              linear-gradient(178deg, transparent 5%, rgba(200,205,205,0.1) 25%, rgba(200,205,205,0.06) 60%, transparent 95%) 7% 0 / 2px 55% no-repeat,
-              linear-gradient(179deg, transparent 10%, rgba(200,205,205,0.08) 35%, transparent 90%) 19% 8% / 1.5px 40% no-repeat,
-              linear-gradient(177deg, transparent 5%, rgba(200,205,205,0.12) 20%, rgba(200,205,205,0.04) 70%, transparent 95%) 34% 3% / 2px 60% no-repeat,
-              linear-gradient(180deg, transparent 15%, rgba(200,205,205,0.07) 40%, transparent 85%) 48% 12% / 1px 35% no-repeat,
-              linear-gradient(178deg, transparent 5%, rgba(200,205,205,0.1) 30%, transparent 90%) 63% 0% / 1.5px 50% no-repeat,
-              linear-gradient(181deg, transparent 10%, rgba(200,205,205,0.09) 25%, rgba(200,205,205,0.03) 65%, transparent 95%) 79% 5% / 2px 45% no-repeat,
-              linear-gradient(179deg, transparent 8%, rgba(200,205,205,0.06) 30%, transparent 88%) 91% 15% / 1px 38% no-repeat
-            `,
-          }}
-        />
-        {/* Fingerprint smudges */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              radial-gradient(ellipse 80px 60px at 25% 35%, rgba(150,150,146,0.12) 0%, transparent 100%),
-              radial-gradient(ellipse 60px 80px at 68% 25%, rgba(145,145,140,0.1) 0%, transparent 100%),
-              radial-gradient(ellipse 90px 50px at 50% 70%, rgba(155,155,150,0.08) 0%, transparent 100%)
-            `,
-          }}
-        />
-        {/* Grit grain: a pre-rendered tile is far cheaper than an SVG filter over playing video */}
-        <div
-          className="absolute inset-0 opacity-[0.16] mix-blend-overlay"
-          style={{ backgroundImage: "url(/media/hero/noise.png)", backgroundSize: "192px 192px" }}
-        />
-      </motion.div>
-
-      {/* ───── SQUEEGEE ─────
-          Full-height layer moved with a transform (translateY % of its own height = the
-          section height) rather than animating `top`, which would register as layout shift. */}
-      <motion.div className="absolute inset-0" style={{ y: squeegeeY, opacity: squeegeeOpacity }}>
-        {/* Handle */}
-        <div className="absolute left-1/2 -top-16 flex -translate-x-1/2 flex-col items-center">
-          <div
-            className="h-7 w-[14px] rounded-t-md"
-            style={{
-              background: "linear-gradient(90deg, #3a2a20, #5a4030, #6b4c38, #5a4030, #3a2a20)",
-              boxShadow: "2px 0 4px rgba(0,0,0,0.3), -1px 0 3px rgba(0,0,0,0.2)",
-            }}
-          />
-          <div
-            className="h-8 w-[10px]"
-            style={{ background: "linear-gradient(90deg, #6b6b6b, #9a9a9a, #6b6b6b)", boxShadow: "1px 0 3px rgba(0,0,0,0.25)" }}
-          />
-          <div
-            className="h-[6px] w-[28px] rounded-sm"
-            style={{ background: "linear-gradient(90deg, #707070, #a0a0a0, #707070)", boxShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
-          />
-        </div>
-        {/* Water pushed ahead of the blade */}
-        <div
-          className="-mb-1 mx-[6%] h-6"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(200,225,235,0.06) 0%, rgba(215,235,242,0.16) 50%, rgba(225,240,245,0.08) 100%)",
-            borderRadius: "0 0 2px 2px",
-          }}
-        />
-        {/* Suds line */}
-        <div
-          className="mx-[6%] h-[3px]"
-          style={{
-            background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 5%, rgba(255,255,255,0.34) 15%, rgba(255,255,255,0.14) 25%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.12) 45%, rgba(255,255,255,0.28) 55%, rgba(255,255,255,0.16) 65%, rgba(255,255,255,0.32) 75%, rgba(255,255,255,0.14) 85%, rgba(255,255,255,0.22) 95%, transparent 100%)`,
-          }}
-        />
-        {/* Rubber blade */}
-        <div
-          className="mx-[6%] h-[6px]"
-          style={{
-            background: "linear-gradient(180deg, #1c1917 0%, #2f2a27 40%, #1c1917 100%)",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
-            borderRadius: "0 0 1px 1px",
-          }}
-        />
-        {/* Metal channel */}
-        <div
-          className="mx-[5.5%] h-[3px]"
-          style={{
-            background: "linear-gradient(180deg, #8a8a8a 0%, #b0b0b0 50%, #8a8a8a 100%)",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
-            borderRadius: "0 0 2px 2px",
-          }}
-        />
-        {/* Drip trails */}
-        {[
-          { side: { left: "6%" }, h: "h-14" },
-          { side: { right: "6%" }, h: "h-10" },
-          { side: { left: "30%" }, h: "h-8" },
-          { side: { right: "25%" }, h: "h-12" },
-        ].map((drip, i) => (
-          <div key={i} className="absolute top-[38px]" style={drip.side}>
-            <div
-              className={`w-[2px] ${drip.h} rounded-b-full`}
-              style={{ background: "linear-gradient(180deg, rgba(220,235,240,0.2) 0%, transparent 100%)" }}
-            />
-          </div>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
 
 function Star() {
   return (
@@ -192,6 +24,7 @@ function Star() {
 
 export default function HeroSection() {
   const [wipeStarted, setWipeStarted] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const { mobile, desktop } = HERO.media;
   const singleSource = mobile === desktop;
   const hasVideo = mobile.kind === "video" || desktop.kind === "video";
@@ -207,7 +40,7 @@ export default function HeroSection() {
 
   return (
     <>
-      <section className="relative h-[100svh] min-h-[560px] overflow-hidden bg-ink md:h-[88vh] md:min-h-[620px]">
+      <section ref={sectionRef} className="relative h-[100svh] min-h-[560px] overflow-hidden bg-ink md:h-[88vh] md:min-h-[620px]">
         {/* Hero footage: portrait on phones, landscape on larger screens */}
         {singleSource ? (
           <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" onPlaying={startWipe} />
@@ -222,7 +55,7 @@ export default function HeroSection() {
           </>
         )}
 
-        <WindowWipe start={wipeStarted} />
+        <GlassWipe start={wipeStarted} containerRef={sectionRef} />
 
         {/* Legibility fade behind the copy */}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-28 bg-gradient-to-b from-black/45 to-transparent" />

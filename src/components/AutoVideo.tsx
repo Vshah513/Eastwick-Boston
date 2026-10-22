@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/lib/use-media-query";
 
 type AutoVideoProps = {
   src: string;
@@ -33,7 +33,7 @@ export default function AutoVideo({
   onPlaying,
 }: AutoVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const [inView, setInView] = useState(false);
   const [userPlaying, setUserPlaying] = useState(false);
 
