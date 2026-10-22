@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  /* New England Classic palette */
+  --cream: #faf7f2;
+  --cream-2: #f3eee6;
+  --sand: #e7dfd3;
+  --ink: #1c1917;
+  --ink-2: #292524;
+  --ink-3: #0f0d0c;
+  --muted: #57534e;
+  --muted-dark: #a8a29e;
+  --copper: #c2410c;
+  --copper-hover: #9a3412;
+  --copper-light: #ea7a45;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
+  --color-sand: var(--sand);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-muted: var(--muted);
+  --color-muted-dark: var(--muted-dark);
+  --color-copper: var(--copper);
+  --color-copper-hover: var(--copper-hover);
+  --color-copper-light: var(--copper-light);
+  --font-heading: var(--font-fraunces);
+  --font-body: var(--font-inter);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading), ui-serif, Georgia, serif;
+  letter-spacing: -0.015em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Hide scrollbars on horizontal strips (marquee, thumbnails) */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Visually hidden but present for spam bots (quote form honeypot) */
+.hp-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
