@@ -37,7 +37,7 @@ export default function Transformations() {
             />
           </ScrollReveal>
           {rest.length > 0 && (
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-8">
+            <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-8">
               {rest.map((t, i) => (
                 <ScrollReveal key={t.id} delay={i * 0.08}>
                   <BeforeAfterSlider

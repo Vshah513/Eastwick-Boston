@@ -74,7 +74,13 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
-        light ? "bg-cream/90 backdrop-blur-xl border-b border-sand" : "bg-transparent border-b border-transparent"
+        // No backdrop-filter while the menu is open: it would become the containing
+        // block for the fixed full-screen sheet and squash it into the bar.
+        mobileOpen
+          ? "bg-cream border-b border-sand"
+          : scrolled
+            ? "bg-cream/90 backdrop-blur-xl border-b border-sand"
+            : "bg-transparent border-b border-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

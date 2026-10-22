@@ -82,7 +82,7 @@ export default function TeamStory() {
   return (
     <section id="team" className="bg-ink py-16 text-white sm:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-copper-light">Our story</p>
             <h2 className="mt-3 text-4xl font-medium leading-[1.05] sm:text-5xl lg:text-6xl">

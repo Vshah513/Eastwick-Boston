@@ -10,7 +10,7 @@ const promises = [
 export default function QuoteSection() {
   return (
     <section id="quote" className="bg-ink py-16 text-white sm:py-24 lg:py-28">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16 lg:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16 lg:px-8">
         <ScrollReveal>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-copper-light">Free estimate</p>
           <h2 className="mt-3 text-4xl font-medium leading-[1.05] sm:text-5xl lg:text-6xl">

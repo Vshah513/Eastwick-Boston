@@ -2,16 +2,21 @@
 export default function MediaPlaceholder({
   label,
   tone = "light",
+  align = "center",
   className = "",
 }: {
   label: string;
   tone?: "light" | "dark";
+  /** Where the label sits; before/after sliders put each side's label on its own half. */
+  align?: "center" | "left" | "right";
   className?: string;
 }) {
   const dark = tone === "dark";
   return (
     <div
-      className={`absolute inset-0 flex items-center justify-center ${
+      className={`absolute inset-0 flex items-center ${
+        align === "left" ? "justify-start pl-[12%]" : align === "right" ? "justify-end pr-[12%]" : "justify-center"
+      } ${
         dark ? "bg-ink-2 text-muted-dark" : "bg-sand text-muted"
       } ${className}`}
       role="img"

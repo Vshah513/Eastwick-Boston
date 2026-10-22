@@ -93,11 +93,11 @@ export default function BeforeAfterSlider({
         className={`relative ${aspectClassName} cursor-ew-resize select-none overflow-hidden rounded-3xl bg-sand`}
       >
         {/* After (full background — clean) */}
-        <MediaFrame item={item.after} frame={frame} sizes={sizes} />
+        <MediaFrame item={item.after} frame={frame} sizes={sizes} placeholderAlign="right" />
 
         {/* Before (clipped — dirty) */}
         <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
-          <MediaFrame item={item.before} frame={frame} sizes={sizes} tone="dark" />
+          <MediaFrame item={item.before} frame={frame} sizes={sizes} tone="dark" placeholderAlign="left" />
         </div>
 
         {/* Slider handle */}

@@ -15,6 +15,7 @@ type MediaFrameProps = {
   preload?: "none" | "metadata" | "auto";
   tone?: "light" | "dark";
   onPlaying?: () => void;
+  placeholderAlign?: "center" | "left" | "right";
 };
 
 /**
@@ -32,9 +33,10 @@ export default function MediaFrame({
   preload,
   tone = "light",
   onPlaying,
+  placeholderAlign,
 }: MediaFrameProps) {
   if (item.kind === "placeholder") {
-    return <MediaPlaceholder label={item.label} tone={tone} />;
+    return <MediaPlaceholder label={item.label} tone={tone} align={placeholderAlign} />;
   }
 
   const fit = item.fit ?? (item.orientation === frame ? "cover" : "contain-blur");

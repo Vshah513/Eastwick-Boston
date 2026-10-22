@@ -31,29 +31,31 @@
   --font-body: var(--font-inter);
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 4.5rem;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+  }
 
-body {
-  background: var(--cream);
-  color: var(--ink);
-  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  overflow-x: clip;
-}
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    overflow-x: clip;
+  }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-heading), ui-serif, Georgia, serif;
-  letter-spacing: -0.015em;
-}
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading), ui-serif, Georgia, serif;
+    letter-spacing: -0.015em;
+  }
 
-:focus-visible {
-  outline: 2px solid var(--copper);
-  outline-offset: 3px;
-  border-radius: 6px;
+  :focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
 }
 
 /* Hide scrollbars on horizontal strips (marquee, thumbnails) */

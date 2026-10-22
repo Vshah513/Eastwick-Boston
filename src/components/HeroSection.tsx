@@ -107,8 +107,10 @@ function WindowWipe({ start }: { start: boolean }) {
         />
       </motion.div>
 
-      {/* ───── SQUEEGEE ───── */}
-      <motion.div className="absolute left-0 right-0" style={{ top: squeegeeY, opacity: squeegeeOpacity }}>
+      {/* ───── SQUEEGEE ─────
+          Full-height layer moved with a transform (translateY % of its own height = the
+          section height) rather than animating `top`, which would register as layout shift. */}
+      <motion.div className="absolute inset-0" style={{ y: squeegeeY, opacity: squeegeeOpacity }}>
         {/* Handle */}
         <div className="absolute left-1/2 -top-16 flex -translate-x-1/2 flex-col items-center">
           <div
@@ -227,16 +229,17 @@ export default function HeroSection() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[70%] bg-gradient-to-t from-ink via-ink/60 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0 z-[3] pb-8 sm:pb-12 md:pb-16">
+          {/* Slide only, no fade: the headline is the LCP element, so it must be visible on first paint. */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ y: 16 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8"
           >
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/75 sm:text-xs">
               Exterior cleaning · {BUSINESS_LOCATION}
             </p>
-            <h1 className="mt-3 max-w-3xl text-[2.6rem] font-medium leading-[1.02] text-white sm:text-6xl lg:text-7xl">
+            <h1 className="mt-3 max-w-3xl [overflow-wrap:anywhere] text-[2.6rem] font-medium leading-[1.02] text-white sm:text-6xl lg:text-7xl">
               {HERO.headline.plain}{" "}
               <em className="font-normal text-copper-light">{HERO.headline.accent}</em>
             </h1>

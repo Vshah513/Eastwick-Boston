@@ -6,7 +6,7 @@ export default function ServiceAreas() {
   return (
     <section id="areas" className="bg-cream py-16 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-copper">Service areas</p>
             <h2 className="mt-3 text-4xl font-medium leading-[1.05] text-ink sm:text-5xl lg:text-6xl">

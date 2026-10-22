@@ -21,7 +21,7 @@ const rows: { label: string; value: string; href?: string; icon: string }[] = [
 export default function ContactList() {
   return (
     <section id="contact" className="bg-cream-2 py-16 sm:py-24 lg:py-28">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <ScrollReveal>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-copper">Contact</p>
           <h2 className="mt-3 text-4xl font-medium leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
@@ -58,7 +58,7 @@ export default function ContactList() {
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-muted">{row.label}</span>
-                    <span className="mt-0.5 block break-words text-base font-medium text-ink">{row.value}</span>
+                    <span className="mt-0.5 block text-base font-medium text-ink [overflow-wrap:anywhere]">{row.value}</span>
                   </span>
                   {row.href && (
                     <span className="text-copper" aria-hidden>
