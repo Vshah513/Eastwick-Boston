@@ -24,10 +24,10 @@ export const BUSINESS = {
   /** E.164, e.g. +16175550123. Drives the tel: and sms: links. */
   phoneE164: "TODO_BOSTON_PHONE_E164",
   /** Primary business location. Also drives the map embed and SEO title. */
-  city: "TODO_CITY",
+  city: "Boston",
   region: "MA",
   regionLong: "Massachusetts",
-  serviceAreaPhrase: "TODO_SERVICE_AREA_PHRASE",
+  serviceAreaPhrase: "Greater Boston",
   // TODO: confirm Boston hours (Raleigh is Mon–Sat 7 AM – 6 PM, Sunday by appointment).
   hours: "TODO_HOURS",
   /** schema.org openingHoursSpecification, kept in sync with `hours`. */

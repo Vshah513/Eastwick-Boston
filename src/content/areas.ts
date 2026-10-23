@@ -5,7 +5,7 @@ import type { Area } from "./types";
  * `lat`/`lng` to drop a pin on the map, e.g. { name: "Newton", lat: 42.337, lng: -71.209 }.
  */
 export const AREAS: Area[] = [
-  { name: "TODO_CITY", hq: true },
+  { name: "Boston", hq: true, lat: 42.3601, lng: -71.0589 },
   { name: "TODO_AREA_2" },
   { name: "TODO_AREA_3" },
   { name: "TODO_AREA_4" },
