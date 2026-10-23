@@ -1,18 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
 import MediaFrame from "@/components/MediaFrame";
-import GlassWipe from "@/components/hero/GlassWipe";
 import { BUSINESS_LOCATION } from "@/lib/business";
 import { HERO } from "@/content/hero";
 import { STATS } from "@/content/stats";
 import { HAS_REVIEWS, OVERALL_RATING, REVIEW_COUNT } from "@/content/reviews";
-
-/** If the clip never starts (e.g. iOS Low Power Mode blocks autoplay), wipe over the poster. */
-const AUTOPLAY_FALLBACK_MS = 2500;
-/** Small pause after the clip starts so the dirty glass registers before the wipe. */
-const WIPE_DELAY_MS = 500;
 
 function Star() {
   return (
@@ -23,39 +16,25 @@ function Star() {
 }
 
 export default function HeroSection() {
-  const [wipeStarted, setWipeStarted] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
   const { mobile, desktop } = HERO.media;
   const singleSource = mobile === desktop;
-  const hasVideo = mobile.kind === "video" || desktop.kind === "video";
-
-  const startWipe = useCallback(() => {
-    setTimeout(() => setWipeStarted(true), WIPE_DELAY_MS);
-  }, []);
-
-  useEffect(() => {
-    const t = setTimeout(() => setWipeStarted(true), hasVideo ? AUTOPLAY_FALLBACK_MS : 900);
-    return () => clearTimeout(t);
-  }, [hasVideo]);
 
   return (
     <>
-      <section ref={sectionRef} className="relative h-[100svh] min-h-[560px] overflow-hidden bg-ink md:h-[88vh] md:min-h-[620px]">
+      <section className="relative h-[100svh] min-h-[560px] overflow-hidden bg-ink md:h-[88vh] md:min-h-[620px]">
         {/* Hero footage: portrait on phones, landscape on larger screens */}
         {singleSource ? (
-          <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" onPlaying={startWipe} />
+          <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" />
         ) : (
           <>
             <div className="absolute inset-0 md:hidden">
-              <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" onPlaying={startWipe} />
+              <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" />
             </div>
             <div className="absolute inset-0 hidden md:block">
-              <MediaFrame item={desktop} frame="landscape" sizes="100vw" priority preload="metadata" tone="dark" onPlaying={startWipe} />
+              <MediaFrame item={desktop} frame="landscape" sizes="100vw" priority preload="metadata" tone="dark" />
             </div>
           </>
         )}
-
-        <GlassWipe start={wipeStarted} containerRef={sectionRef} />
 
         {/* Legibility fade behind the copy */}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-28 bg-gradient-to-b from-black/45 to-transparent" />

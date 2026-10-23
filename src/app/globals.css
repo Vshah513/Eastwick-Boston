@@ -76,10 +76,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Hero wipe is skipped; hide it before hydration so the frost never flashes. */
-  .glass-wipe {
-    display: none;
-  }
   html {
     scroll-behavior: auto;
   }
@@ -92,23 +88,3 @@
   }
 }
 
-/* Hero glass wipe (src/components/hero/GlassWipe.tsx) */
-@keyframes seam-fade {
-  0% { opacity: 0.7; }
-  100% { opacity: 0; }
-}
-@keyframes drip-fall {
-  0% { opacity: 0; translate: 0 0; }
-  12% { opacity: 1; }
-  100% { opacity: 0; translate: 0 140px; }
-}
-@keyframes glint-sweep {
-  0% { transform: translateX(-120%); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translateX(260%); opacity: 0; }
-}
-@keyframes sparkle-pop {
-  0% { transform: scale(0) rotate(0deg); opacity: 0; }
-  45% { transform: scale(1) rotate(45deg); opacity: 1; }
-  100% { transform: scale(0) rotate(90deg); opacity: 0; }
-}
