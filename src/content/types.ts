@@ -65,6 +65,12 @@ export type TeamMember = {
   headshotFocal?: string;
 };
 
-export type Area = { name: string; hq?: boolean };
+export type Area = {
+  name: string;
+  hq?: boolean;
+  /** Map pin position. Areas without coordinates are listed but not pinned. */
+  lat?: number;
+  lng?: number;
+};
 
 export type Stat = { value: string; label: string };

@@ -43,7 +43,7 @@ Almost every change is a one-line edit in one of these files.
 | Company story | `src/content/story.ts` |
 | Team members and bios | `src/content/team.ts` |
 | Stats under the hero | `src/content/stats.ts` |
-| Service area cities (mark the HQ with `hq: true`) | `src/content/areas.ts` |
+| Service area cities and map pins (mark the HQ with `hq: true`; add `lat`/`lng` to pin a city on the map) | `src/content/areas.ts` |
 | Colors and fonts | `src/app/globals.css`, `src/app/layout.tsx` |
 
 The footer, quote form, SEO description, keywords and JSON-LD are all generated from these files, so they stay in sync automatically.

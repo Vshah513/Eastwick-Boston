@@ -12,3 +12,4 @@ build/
 next-env.d.ts
 public/uploads/
 media-src/
+public/maplibre/

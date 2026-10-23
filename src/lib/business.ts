@@ -27,8 +27,6 @@ export const BUSINESS = {
   city: "TODO_CITY",
   region: "MA",
   regionLong: "Massachusetts",
-  /** Query used to centre the Google Maps embed. */
-  mapQuery: "TODO_CITY, MA",
   serviceAreaPhrase: "TODO_SERVICE_AREA_PHRASE",
   // TODO: confirm Boston hours (Raleigh is Mon–Sat 7 AM – 6 PM, Sunday by appointment).
   hours: "TODO_HOURS",
