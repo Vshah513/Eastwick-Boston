@@ -9,7 +9,15 @@ const ALL_SERVICES: Service[] = [
     id: "window-cleaning",
     title: "Window Cleaning",
     blurb: "Streak-free glass, inside and out. Homes, storefronts and every story in between.",
-    media: [{ kind: "placeholder", label: "Window cleaning clip" }],
+    media: [
+      {
+        kind: "video",
+        src: "/media/services/window-cleaning.mp4",
+        poster: "/media/services/window-cleaning.jpg",
+        orientation: "portrait",
+        alt: "Technician cleaning a window with a water-fed pole",
+      },
+    ],
   },
   {
     id: "pressure-washing",
