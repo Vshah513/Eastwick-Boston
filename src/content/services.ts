@@ -40,7 +40,18 @@ const ALL_SERVICES: Service[] = [
     id: "house-wash",
     title: "House Wash",
     blurb: "A low-pressure soft wash for siding and roofs that clears algae and mildew without damage.",
-    media: [{ kind: "placeholder", label: "House wash clip" }],
+    media: [
+      {
+        kind: "video",
+        src: "/media/services/house-wash.mp4",
+        poster: "/media/services/house-wash.jpg",
+        orientation: "landscape",
+        // Landscape clip in a portrait card: crop toward the house and the soft-wash spray on the right.
+        fit: "cover",
+        focal: "62% 50%",
+        alt: "Soft washing the siding and roof of a white two-story house",
+      },
+    ],
   },
   {
     // TODO_SERVICE_4: name, blurb and media from Henry.
