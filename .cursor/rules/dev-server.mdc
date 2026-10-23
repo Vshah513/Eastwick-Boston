@@ -1,0 +1,15 @@
+---
+description: Never kill or restart the shared dev server on port 3005
+alwaysApply: true
+---
+
+# Dev server: reuse it, never restart it
+
+The user keeps one dev server running at http://localhost:3005 and other sessions share it.
+`next dev` hot-reloads every edit (code, content, CSS, files in `public/`), so a restart is never needed to see a change.
+
+- Before starting a server, check: `curl -s -o /dev/null -w "%{http_code}" http://localhost:3005/`. If it answers, use it.
+- Only start one (`npm run dev -- -p 3005`) when nothing is listening on 3005.
+- Never `kill`, `pkill`, `lsof -ti:3005 | xargs kill`, or otherwise stop a server you did not start in this turn.
+- Never start a second `next dev` on another port in this folder; it fights over `.next/`.
+- If the server is genuinely broken (crashes, stale after a `next.config.ts` or dependency change), tell the user and ask before restarting it.
