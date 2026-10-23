@@ -16,42 +16,40 @@ function Star() {
 }
 
 export default function HeroSection() {
-  const { mobile, desktop } = HERO.media;
-  const singleSource = mobile === desktop;
+  const { mobile, panel } = HERO.media;
 
   return (
     <>
       <section className="relative h-[100svh] min-h-[560px] overflow-hidden bg-ink md:h-[88vh] md:min-h-[620px]">
-        {/* Hero footage: portrait on phones, landscape on larger screens */}
-        {singleSource ? (
+        {/* Phones: footage fills the screen behind the copy */}
+        <div className="absolute inset-0 md:hidden">
           <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" />
-        ) : (
-          <>
-            <div className="absolute inset-0 md:hidden">
-              <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" />
-            </div>
-            <div className="absolute inset-0 hidden md:block">
-              <MediaFrame item={desktop} frame="landscape" sizes="100vw" priority preload="metadata" tone="dark" />
-            </div>
-          </>
-        )}
+        </div>
 
-        {/* Legibility fade behind the copy */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-28 bg-gradient-to-b from-black/45 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[70%] bg-gradient-to-t from-ink via-ink/60 to-transparent" />
+        {/* Larger screens: copy on the left, footage in a panel on the right */}
+        <div className="absolute inset-y-0 right-0 hidden w-[46%] md:block">
+          <MediaFrame item={panel} frame="portrait" sizes="46vw" priority preload="metadata" tone="dark" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/60 to-transparent" />
+        </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-[3] pb-8 sm:pb-12 md:pb-16">
+        {/* Legibility fade behind the copy (phones only) */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-28 bg-gradient-to-b from-black/45 to-transparent md:hidden" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[70%] bg-gradient-to-t from-ink via-ink/60 to-transparent md:hidden" />
+
+        <div className="absolute inset-x-0 bottom-0 z-[3] pb-8 sm:pb-12 md:inset-y-0 md:flex md:items-center md:pb-0 md:pt-16">
           {/* Slide only, no fade: the headline is the LCP element, so it must be visible on first paint. */}
           <motion.div
             initial={{ y: 16 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8"
+            className="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8"
           >
+            <div className="md:max-w-[46%]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/75 sm:text-xs">
               Exterior cleaning · {BUSINESS_LOCATION}
             </p>
-            <h1 className="mt-3 max-w-3xl [overflow-wrap:anywhere] text-[2.6rem] font-medium leading-[1.02] text-white sm:text-6xl lg:text-7xl">
+            <h1 className="mt-3 max-w-3xl [overflow-wrap:anywhere] text-[2.6rem] font-medium leading-[1.02] text-white sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl">
               {HERO.headline.plain}{" "}
               <em className="font-normal text-copper-light">{HERO.headline.accent}</em>
             </h1>
@@ -85,6 +83,7 @@ export default function HeroSection() {
               >
                 See the work
               </a>
+            </div>
             </div>
           </motion.div>
         </div>
