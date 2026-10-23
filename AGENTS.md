@@ -10,9 +10,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Dev server: reuse it, never restart it
 
-The user keeps one dev server running at http://localhost:3005, shared by every session. `next dev` hot-reloads every edit, so a restart is never needed to see a change.
+The user's dev server runs at http://localhost:3006 under a keep-alive loop (`/tmp/eastwick-dev-3006.sh`) that restarts it if it stops. `next dev` hot-reloads every edit, so a restart is never needed to see a change.
 
-- Before starting a server, check `curl -s -o /dev/null -w "%{http_code}" http://localhost:3005/`. If it answers, use it.
-- Only run `npm run dev -- -p 3005` when nothing is listening on 3005.
-- Never kill, pkill or otherwise stop a server you did not start in this turn, and never start a second `next dev` on another port in this folder.
-- If the server is genuinely broken, tell the user and ask before restarting it.
+- To check your work, use http://localhost:3006. Do not start another `next dev` in this folder.
+- Never kill, pkill or otherwise stop anything on port 3006, or the loop itself.
+- For a production check, use `npm run build` then `npm run start -- -p 3010`, and stop only that server.
+- If the server is genuinely broken, tell the user and ask before touching it.
