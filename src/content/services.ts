@@ -23,7 +23,18 @@ const ALL_SERVICES: Service[] = [
     id: "pressure-washing",
     title: "Pressure Washing",
     blurb: "Driveways, walkways, patios and decks. Years of grime lifted in a single visit.",
-    media: [{ kind: "placeholder", label: "Pressure washing clip" }],
+    media: [
+      {
+        kind: "video",
+        src: "/media/services/pressure-washing.mp4",
+        poster: "/media/services/pressure-washing.jpg",
+        orientation: "landscape",
+        // Landscape clip in a portrait card: crop to the centre, where the surface cleaner works.
+        fit: "cover",
+        focal: "50% 50%",
+        alt: "Surface cleaner pressure washing a wet concrete walkway",
+      },
+    ],
   },
   {
     id: "house-wash",
