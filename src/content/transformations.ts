@@ -2,7 +2,7 @@ import type { MediaItem, Transformation } from "./types";
 
 /**
  * Before/after sliders. The first entry is featured (largest) on desktop.
- * Use only real job photos. Put files in public/media/transformations/.
+ * Use only real job photos. Raw files go in media-src/transformations/<id>/{before,after}/.
  */
 export const TRANSFORMATIONS: Transformation[] = [
   {

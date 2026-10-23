@@ -52,8 +52,19 @@ Anything still set to `TODO_…` is a placeholder. In development the console li
 
 ### Adding photos and video
 
-1. Put the raw files in `media-src/<folder>/` (gitignored). Folders: `hero`, `services`, `transformations`, `team`, `areas`, `og`.
-2. Run `npm run optimize-media` (needs `ffmpeg`). Videos become H.264 MP4s (no audio, ≤4 MB target) with a poster JPG. Photos are resized. Filenames become lowercase-hyphenated.
+1. Drag the raw files into the labelled folder in `media-src/` (gitignored), not into `public/`:
+
+| Folder | What goes there |
+|---|---|
+| `hero/desktop-landscape`, `hero/phone-portrait` | Top-of-page video (one wide, one vertical; the same clip in both is fine) |
+| `services/<service-id>` | 1–3 clips or photos per service (`window-cleaning`, `pressure-washing`, `house-wash`, `service-4`, `service-5`) |
+| `transformations/<job>/before`, `.../after` | One photo each for the before/after sliders (`windows`, `driveway`, `siding`) |
+| `transformations/extra-job-photos` | Optional gallery under the sliders |
+| `team/<first-last>` | One square headshot per person |
+| `team/group-photo` | Optional wide crew photo for the story section |
+| `og` | Link-preview image, 1200×630 |
+
+2. Run `npm run optimize-media` (needs `ffmpeg`). Videos become H.264 MP4s (no audio, ≤4 MB target) with a poster JPG. Photos are resized. Output lands in `public/media/<folder>/`, named after the slot, e.g. `media-src/transformations/driveway/before/IMG 4821.JPG` becomes `/media/transformations/driveway-before-img-4821.jpg`.
 3. Reference the output in the matching `src/content/*.ts` file, e.g.
 
 ```ts

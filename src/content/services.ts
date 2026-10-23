@@ -2,7 +2,7 @@ import type { Service } from "./types";
 
 /**
  * Services shown in the reels section, the quote form, the footer and SEO.
- * Adding a service is one entry here. Media goes in public/media/services/.
+ * Adding a service is one entry here. Raw media goes in media-src/services/<id>/.
  */
 const ALL_SERVICES: Service[] = [
   {

@@ -3,7 +3,7 @@ import type { TeamMember } from "./types";
 /**
  * TODO: confirm the Boston team. Bios avoid time-sensitive phrases
  * ("rising junior", "this summer") so they don't go stale.
- * Headshots go in public/media/team/ (square, at least 800×800).
+ * Raw headshots go in media-src/team/<first-last>/ (square, at least 800×800).
  */
 export const TEAM: TeamMember[] = [
   {

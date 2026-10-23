@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 # Compress the client's raw media for the web.
 #
-#   media-src/<folder>/<anything>.{mov,mp4,m4v}  ->  public/media/<folder>/<slug>.mp4 + <slug>.jpg (poster)
-#   media-src/<folder>/<anything>.{jpg,jpeg,png,heic} -> public/media/<folder>/<slug>.jpg
+#   media-src/<folder>/[<slot>/...]<anything>.{mov,mp4,m4v}  ->  public/media/<folder>/<slot-...-slug>.mp4 + .jpg (poster)
+#   media-src/<folder>/[<slot>/...]<anything>.{jpg,jpeg,png,heic} -> public/media/<folder>/<slot-...-slug>.jpg
 #
-# <folder> is one of: hero, services, transformations, team, areas, og.
-# Filenames become lowercase-hyphenated slugs ("Window Before 2.JPG" -> window-before-2.jpg).
+# <folder> is one of: hero, services, transformations, team, og.
+# Subfolders are labelled slots (e.g. services/window-cleaning, transformations/driveway/before);
+# their names are prefixed onto the output filename.
+# Filenames become lowercase-hyphenated slugs ("IMG 4821.JPG" in transformations/driveway/before
+# -> transformations/driveway-before-img-4821.jpg).
 # Videos: H.264, no audio, faststart, long edge <= 1080 (hero <= 1920), target <= 4 MB.
 # media-src/ is gitignored; only the optimized output is committed.
 set -euo pipefail
@@ -16,7 +19,7 @@ SRC="media-src"
 OUT="public/media"
 MAX_BYTES=$((4 * 1024 * 1024))
 
-[ -d "$SRC" ] || { echo "Put raw files in $SRC/<folder>/ first (folders: hero services transformations team areas og)"; exit 1; }
+[ -d "$SRC" ] || { echo "Put raw files in $SRC/<folder>/ first (folders: hero services transformations team og)"; exit 1; }
 
 slugify() {
   echo "$1" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g'
@@ -28,12 +31,16 @@ encode_video() { # in out long_edge crf
     -movflags +faststart "$2"
 }
 
-find "$SRC" -type f | while read -r file; do
-  folder=$(basename "$(dirname "$file")")
-  name=$(basename "$file")
+find "$SRC" -type f -not -name '.*' | while read -r file; do
+  rel="${file#"$SRC"/}"
+  folder="${rel%%/*}"
+  [ "$folder" = "$rel" ] && { echo "  skipped $file (put it inside a folder)"; continue; }
+  slot_path="${rel#*/}"
+  name=$(basename "$slot_path")
   base="${name%.*}"
   ext=$(echo "${name##*.}" | tr '[:upper:]' '[:lower:]')
-  slug=$(slugify "$base")
+  slots=$(dirname "$slot_path")
+  [ "$slots" = "." ] && slug=$(slugify "$base") || slug=$(slugify "$slots-$base")
   mkdir -p "$OUT/$folder"
 
   case "$ext" in
