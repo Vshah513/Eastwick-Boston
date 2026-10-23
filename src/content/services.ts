@@ -46,9 +46,9 @@ const ALL_SERVICES: Service[] = [
         src: "/media/services/house-wash.mp4",
         poster: "/media/services/house-wash.jpg",
         orientation: "landscape",
-        // Landscape clip in a portrait card: crop toward the house and the soft-wash spray on the right.
+        // Landscape clip in a portrait card: crop to the right edge, where the soft-wash action happens.
         fit: "cover",
-        focal: "62% 50%",
+        focal: "100% 50%",
         alt: "Soft washing the siding and roof of a white two-story house",
       },
     ],
