@@ -11,4 +11,4 @@ build/
 *.tsbuildinfo
 next-env.d.ts
 public/uploads/
-public/uploads/
+media-src/
