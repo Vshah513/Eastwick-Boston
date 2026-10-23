@@ -10,4 +10,4 @@ build/
 *.log
 *.tsbuildinfo
 next-env.d.ts
-media-src/
+public/uploads/

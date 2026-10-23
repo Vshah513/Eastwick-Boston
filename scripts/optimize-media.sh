@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Compress the client's raw media for the web.
 #
-#   media-src/<folder>/[<slot>/...]<anything>.{mov,mp4,m4v}  ->  public/media/<folder>/<slot-...-slug>.mp4 + .jpg (poster)
-#   media-src/<folder>/[<slot>/...]<anything>.{jpg,jpeg,png,heic} -> public/media/<folder>/<slot-...-slug>.jpg
+#   public/uploads/<folder>/[<slot>/...]<anything>.{mov,mp4,m4v}  ->  public/media/<folder>/<slot-...-slug>.mp4 + .jpg (poster)
+#   public/uploads/<folder>/[<slot>/...]<anything>.{jpg,jpeg,png,heic} -> public/media/<folder>/<slot-...-slug>.jpg
 #
 # <folder> is one of: hero, services, transformations, team, og.
 # Subfolders are labelled slots (e.g. services/window-cleaning, transformations/driveway/before);
@@ -10,12 +10,12 @@
 # Filenames become lowercase-hyphenated slugs ("IMG 4821.JPG" in transformations/driveway/before
 # -> transformations/driveway-before-img-4821.jpg).
 # Videos: H.264, no audio, faststart, long edge <= 1080 (hero <= 1920), target <= 4 MB.
-# media-src/ is gitignored; only the optimized output is committed.
+# public/uploads/ is gitignored; only the optimized output is committed.
 set -euo pipefail
 
 command -v ffmpeg >/dev/null || { echo "ffmpeg is required (brew install ffmpeg)"; exit 1; }
 
-SRC="media-src"
+SRC="public/uploads"
 OUT="public/media"
 MAX_BYTES=$((4 * 1024 * 1024))
 
