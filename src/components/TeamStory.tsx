@@ -29,7 +29,8 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
             src={member.headshot}
             alt={member.name}
             fill
-            className="object-cover object-center"
+            className="object-cover"
+            style={{ objectPosition: member.headshotFocal ?? "50% 25%" }}
             sizes="(min-width: 1024px) 20vw, 50vw"
           />
         ) : (

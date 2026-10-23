@@ -61,6 +61,8 @@ export type TeamMember = {
   title: string;
   bio: string;
   headshot?: string;
+  /** CSS object-position for the square crop. Defaults to "50% 25%" (keeps faces in portrait photos). */
+  headshotFocal?: string;
 };
 
 export type Area = { name: string; hq?: boolean };
