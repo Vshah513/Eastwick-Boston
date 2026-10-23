@@ -1,8 +1,10 @@
 import type { MediaItem } from "./types";
 
 export const HERO = {
-  // TODO_HEADLINE: Henry is sending the copy. `accent` renders in copper italic.
-  headline: { plain: "TODO_HEADLINE", accent: "accent phrase." },
+  /** `accent` renders in copper italic. */
+  headline: { plain: "Crystal Clear Results,", accent: "Every Time." },
+  /** Small line above the headline. Separate from BUSINESS.city, which is still unconfirmed. */
+  eyebrow: "Exterior cleaning · Boston, MA",
   /**
    * Hero footage, portrait. `mobile` fills the screen on phones; `panel` sits to
    * the right of the copy on larger screens. Keep under ~4 MB (npm run optimize-media).

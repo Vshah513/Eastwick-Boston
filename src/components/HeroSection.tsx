@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import MediaFrame from "@/components/MediaFrame";
-import { BUSINESS_LOCATION } from "@/lib/business";
 import { HERO } from "@/content/hero";
 import { STATS } from "@/content/stats";
 import { HAS_REVIEWS, OVERALL_RATING, REVIEW_COUNT } from "@/content/reviews";
@@ -47,11 +46,11 @@ export default function HeroSection() {
           >
             <div className="md:max-w-[46%]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/75 sm:text-xs">
-              Exterior cleaning · {BUSINESS_LOCATION}
+              {HERO.eyebrow}
             </p>
             <h1 className="mt-3 max-w-3xl [overflow-wrap:anywhere] text-[2.6rem] font-medium leading-[1.02] text-white sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl">
               {HERO.headline.plain}{" "}
-              <em className="font-normal text-copper-light">{HERO.headline.accent}</em>
+              <em className="whitespace-nowrap font-normal text-copper-light">{HERO.headline.accent}</em>
             </h1>
 
             <ul className="mt-5 flex flex-wrap gap-2 text-xs font-medium text-white sm:text-sm">
