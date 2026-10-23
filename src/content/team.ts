@@ -14,27 +14,6 @@ export const TEAM: TeamMember[] = [
     headshotFocal: "50% 22%",
   },
   {
-    name: "Jack Davenport",
-    title: "Co-Founder & Project Manager",
-    bio: "Jack studies at the University of Alabama. One of Eastwick's original crew, he manages the technicians who complete our residential jobs.",
-    headshot: "/media/team/jack.jpg",
-    headshotFocal: "50% 28%",
-  },
-  {
-    name: "Nick Buff",
-    title: "Project Manager",
-    bio: "Nick studies at Wake Technical Community College. He started as Eastwick's lead technician and now runs the soft washing and pressure washing team.",
-    headshot: "/media/team/nick.jpg",
-    headshotFocal: "50% 28%",
-  },
-  {
-    name: "Everett Blachly",
-    title: "Head of Sales",
-    bio: "Everett studies at UNC Chapel Hill. He built Eastwick's sales team into 12+ active representatives.",
-    headshot: "/media/team/everett.jpg",
-    headshotFocal: "50% 28%",
-  },
-  {
     name: "Paul Helms",
     title: "Project Manager",
     bio: "Paul studies at Appalachian State University. He manages technicians on job sites and helps with client outreach.",

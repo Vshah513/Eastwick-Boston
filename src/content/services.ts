@@ -53,20 +53,24 @@ const ALL_SERVICES: Service[] = [
       },
     ],
   },
-  {
-    // TODO_SERVICE_4: name, blurb and media from Henry.
-    id: "service-4",
-    title: "TODO_SERVICE_4",
-    blurb: "TODO: one-line description.",
-    media: [{ kind: "placeholder", label: "Service 4 clip" }],
-  },
-  {
-    // TODO_SERVICE_5: name, blurb and media from Henry.
-    id: "service-5",
-    title: "TODO_SERVICE_5",
-    blurb: "TODO: one-line description.",
-    media: [{ kind: "placeholder", label: "Service 5 clip" }],
-  },
+  // To add a service later, copy this block (same format as the three above), fill it in, and
+  // drop the clip and poster in public/media/services/ (npm run optimize-media makes both).
+  // {
+  //   id: "your-service",            // lowercase-hyphenated; used by the quote form and "Quote this"
+  //   title: "Service Name",
+  //   blurb: "One-line description.",
+  //   media: [
+  //     {
+  //       kind: "video",
+  //       src: "/media/services/your-service.mp4",
+  //       poster: "/media/services/your-service.jpg",
+  //       orientation: "landscape",  // or "portrait"; printed by npm run optimize-media
+  //       fit: "cover",              // landscape clip in a portrait card: crop to the action
+  //       focal: "50% 50%",          // which part of the clip stays in view
+  //       alt: "What the clip shows",
+  //     },
+  //   ],
+  // },
 ];
 
 /** Every service id the API accepts, including hidden ones. */
