@@ -15,18 +15,18 @@ export default function LegalPage({
 }) {
   return (
     <>
-      <header className="border-b border-sand bg-cream">
+      <header className="border-b border-line bg-paper">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-4 px-4 sm:h-20 sm:px-6">
           <Link href="/" className="shrink-0">
             <BrandLogo priority tone="light" sizeClassName="h-8 w-auto sm:h-9 max-w-[200px]" />
           </Link>
-          <Link href="/" className="text-sm font-medium text-muted transition-colors hover:text-copper">
+          <Link href="/" className="text-sm font-medium text-muted transition-colors hover:text-accent">
             &larr; Back to home
           </Link>
         </div>
       </header>
 
-      <main className="flex-1 bg-cream">
+      <main className="flex-1 bg-paper">
         <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
           <h1 className="text-4xl font-medium text-ink sm:text-5xl">{title}</h1>
           <p className="mt-3 text-sm text-muted">Last updated: {LEGAL_LAST_UPDATED}</p>
@@ -52,7 +52,7 @@ export function LegalSection({ title, children }: { title: string; children: Rea
 /** Styled inline link for use inside legal copy. */
 export function LegalLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="font-medium text-copper underline underline-offset-2 hover:text-copper-hover">
+    <Link href={href} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
       {children}
     </Link>
   );
@@ -65,13 +65,13 @@ export function LegalContactSection() {
         <span className="block font-semibold text-ink">{BUSINESS.name}</span>
         <span className="block">
           Email:{" "}
-          <a href={`mailto:${BUSINESS.email}`} className="break-all text-copper hover:text-copper-hover">
+          <a href={`mailto:${BUSINESS.email}`} className="break-all text-accent hover:text-accent-hover">
             {BUSINESS.email}
           </a>
         </span>
         <span className="block">
           Phone:{" "}
-          <a href={PHONE_HREF} className="text-copper hover:text-copper-hover">
+          <a href={PHONE_HREF} className="text-accent hover:text-accent-hover">
             {BUSINESS.phoneDisplay}
           </a>
         </span>

@@ -1,15 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import MotionProvider from "@/components/MotionProvider";
 import { BUSINESS, BUSINESS_LOCATION } from "@/lib/business";
 import { SERVICES } from "@/content/services";
 import { AREAS } from "@/content/areas";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
-  style: ["normal", "italic"],
 });
 
 const inter = Inter({
@@ -52,13 +51,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1c1917",
+  themeColor: "#0b1b33",
   viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${manrope.variable} ${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <MotionProvider>{children}</MotionProvider>
       </body>

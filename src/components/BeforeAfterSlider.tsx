@@ -13,6 +13,8 @@ interface BeforeAfterSliderProps {
   sizes: string;
   /** Bigger title on the featured card. */
   featured?: boolean;
+  /** Extra classes for the title/description caption, e.g. to hide it where a list already shows it. */
+  captionClassName?: string;
 }
 
 const KEY_STEP = 5;
@@ -23,6 +25,7 @@ export default function BeforeAfterSlider({
   frame,
   sizes,
   featured = false,
+  captionClassName = "",
 }: BeforeAfterSliderProps) {
   const [position, setPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -90,7 +93,7 @@ export default function BeforeAfterSlider({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        className={`relative ${aspectClassName} cursor-ew-resize select-none overflow-hidden rounded-3xl bg-sand`}
+        className={`relative ${aspectClassName} cursor-ew-resize select-none overflow-hidden rounded-3xl bg-line`}
       >
         {/* After (full background — clean) */}
         <MediaFrame item={item.after} frame={frame} sizes={sizes} placeholderAlign="right" />
@@ -120,7 +123,7 @@ export default function BeforeAfterSlider({
             onKeyDown={handleKeyDown}
             className="absolute top-1/2 left-0 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-xl shadow-black/25"
           >
-            <svg className="pointer-events-none h-5 w-5 text-copper" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden>
+            <svg className="pointer-events-none h-5 w-5 text-accent" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" d="M8 9l-3 3 3 3M16 9l3 3-3 3" />
             </svg>
           </div>
@@ -135,8 +138,8 @@ export default function BeforeAfterSlider({
         </span>
       </div>
 
-      <figcaption className="mt-4 px-1">
-        <h3 className={`font-medium text-ink ${featured ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"}`}>{item.title}</h3>
+      <figcaption className={`mt-4 px-1 ${captionClassName}`}>
+        <h3 className={`font-bold tracking-tight text-ink ${featured ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"}`}>{item.title}</h3>
         <p className="mt-1 text-sm leading-relaxed text-muted sm:text-base">{item.description}</p>
       </figcaption>
     </figure>

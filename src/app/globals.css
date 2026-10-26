@@ -1,44 +1,44 @@
 @import "tailwindcss";
 
 :root {
-  /* New England Classic palette */
-  --cream: #faf7f2;
-  --cream-2: #f3eee6;
-  --sand: #e7dfd3;
-  --ink: #1c1917;
-  --ink-2: #292524;
-  --ink-3: #0f0d0c;
-  --muted: #57534e;
-  --muted-dark: #a8a29e;
-  --copper: #c2410c;
-  --copper-hover: #9a3412;
-  --copper-light: #ea7a45;
+  /* Harbor navy palette: navy ink and the Eastwick logo blue on crisp white */
+  --paper: #ffffff;
+  --fog: #f2f5f9;
+  --line: #e1e7ef;
+  --ink: #0b1b33;
+  --ink-2: #12284a;
+  --ink-3: #071226;
+  --muted: #4a5a70;
+  --muted-dark: #9fb0c6;
+  --accent: #1f5fbf;
+  --accent-hover: #184c99;
+  --accent-light: #7fb2ff;
 }
 
 @theme inline {
-  --color-cream: var(--cream);
-  --color-cream-2: var(--cream-2);
-  --color-sand: var(--sand);
+  --color-paper: var(--paper);
+  --color-fog: var(--fog);
+  --color-line: var(--line);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
   --color-muted: var(--muted);
   --color-muted-dark: var(--muted-dark);
-  --color-copper: var(--copper);
-  --color-copper-hover: var(--copper-hover);
-  --color-copper-light: var(--copper-light);
-  --font-heading: var(--font-fraunces);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --font-heading: var(--font-manrope);
   --font-body: var(--font-inter);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
-    background: var(--cream);
+    background: var(--paper);
     color: var(--ink);
     font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     overflow-x: clip;
@@ -47,18 +47,26 @@
   h1,
   h2,
   h3 {
-    font-family: var(--font-heading), ui-serif, Georgia, serif;
-    letter-spacing: -0.015em;
+    font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.03em;
   }
 
   :focus-visible {
-    outline: 2px solid var(--copper);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 6px;
   }
 }
 
-/* Hide scrollbars on horizontal strips (marquee, thumbnails) */
+/* Small uppercase label above section headings */
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Hide scrollbars on horizontal strips (chips, review cards) */
 .no-scrollbar {
   scrollbar-width: none;
 }
@@ -75,6 +83,18 @@
   overflow: hidden;
 }
 
+/* Town ticker (src/components/TownTicker.tsx): two identical halves, shifted by one half per loop */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 38s linear infinite;
+}
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -86,6 +106,9 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .ticker-track {
+    animation: none;
+  }
 }
 
 
@@ -96,26 +119,26 @@
   border-radius: 9999px;
   background: var(--ink);
   border: 3px solid #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 8px rgba(11, 27, 51, 0.35);
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 .ew-pin:hover,
 .ew-pin.is-active {
   transform: scale(1.35);
-  background: var(--copper);
+  background: var(--accent);
 }
 .ew-pin--hq {
   width: 22px;
   height: 22px;
-  background: var(--copper);
+  background: var(--accent);
 }
 .ew-pin--hq::after {
   content: "";
   position: absolute;
   inset: -3px;
   border-radius: 9999px;
-  border: 2px solid var(--copper);
+  border: 2px solid var(--accent);
   animation: pin-pulse 2s ease-out infinite;
 }
 @keyframes pin-pulse {
@@ -126,17 +149,19 @@
   border-radius: 14px;
   padding: 12px 14px;
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  box-shadow: 0 10px 30px rgba(28, 25, 23, 0.18);
+  box-shadow: 0 10px 30px rgba(11, 27, 51, 0.18);
 }
 .ew-popup-title {
-  font-family: var(--font-heading), ui-serif, Georgia, serif;
+  font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
   font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--ink);
 }
 .ew-popup-tag {
   margin-left: 4px;
   border-radius: 9999px;
-  background: var(--copper);
+  background: var(--accent);
   padding: 1px 6px;
   font-family: var(--font-body), sans-serif;
   font-size: 10px;
@@ -150,8 +175,8 @@
   margin-top: 6px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--copper);
+  color: var(--accent);
 }
 .ew-popup-link:hover {
-  color: var(--copper-hover);
+  color: var(--accent-hover);
 }

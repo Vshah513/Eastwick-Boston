@@ -35,11 +35,11 @@ const smsTerms: { label: string; text: React.ReactNode }[] = [
     text: (
       <>
         Reply HELP for assistance or contact us at{" "}
-        <a href={PHONE_HREF} className="text-copper hover:text-copper-hover">
+        <a href={PHONE_HREF} className="text-accent hover:text-accent-hover">
           {BUSINESS.phoneDisplay}
         </a>{" "}
         or{" "}
-        <a href={`mailto:${BUSINESS.email}`} className="text-copper hover:text-copper-hover break-all">
+        <a href={`mailto:${BUSINESS.email}`} className="text-accent hover:text-accent-hover break-all">
           {BUSINESS.email}
         </a>
         .

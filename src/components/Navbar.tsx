@@ -4,15 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
-import { HAS_REVIEWS } from "@/content/reviews";
 
 const navLinks = [
   { label: "Services", href: "#services" },
-  { label: "Transformations", href: "#transformations" },
-  ...(HAS_REVIEWS ? [{ label: "Reviews", href: "#reviews" }] : []),
-  { label: "Team", href: "#team" },
+  { label: "Results", href: "#results" },
+  { label: "Founders", href: "#founders" },
   { label: "Areas", href: "#areas" },
-  { label: "Contact", href: "#contact" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 /**
@@ -28,6 +26,7 @@ function scrollToSectionId(hash: string) {
   window.history.replaceState(null, "", `#${id}`);
 }
 
+/** Floating frosted pill: logo left, links centred (desktop), quote action right. */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -51,7 +50,7 @@ export default function Navbar() {
   );
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -68,120 +67,114 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  // Light surface (cream bar or open menu) → navy logo and dark text.
-  const light = scrolled || mobileOpen;
-
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
-        // No backdrop-filter while the menu is open: it would become the containing
-        // block for the fixed full-screen sheet and squash it into the bar.
-        mobileOpen
-          ? "bg-cream border-b border-sand"
-          : scrolled
-            ? "bg-cream/90 backdrop-blur-xl border-b border-sand"
-            : "bg-transparent border-b border-transparent"
-      }`}
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between sm:h-18">
-          {/* Logo — crossfade between dark-surface (over hero) and light-surface variants. */}
-          <Link href="/" className="relative flex shrink-0 items-center py-1" aria-label="Home">
-            <BrandLogo
-              priority
-              tone="dark"
-              sizeClassName="h-8 w-auto sm:h-9 max-w-[min(100vw-8rem,220px)]"
-              className={`transition-opacity duration-500 ${light ? "opacity-0" : "opacity-100"}`}
-            />
-            <BrandLogo
-              priority
-              tone="light"
-              sizeClassName="h-8 w-auto sm:h-9 max-w-[min(100vw-8rem,220px)]"
-              className={`absolute inset-0 transition-opacity duration-500 ${light ? "opacity-100" : "opacity-0"}`}
-            />
-          </Link>
-
-          {/* Desktop Links */}
-          <div className="hidden items-center gap-1 lg:flex">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => onSectionLinkClick(e, link.href)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  light ? "text-muted hover:text-ink" : "text-white/80 hover:text-white"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          <div className="hidden lg:block">
-            <a
-              href="#quote"
-              onClick={(e) => onSectionLinkClick(e, "#quote")}
-              className="inline-flex items-center gap-2 rounded-full bg-copper px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-copper-hover"
-            >
-              Get a Quote
-            </a>
-          </div>
-
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className={`-mr-2 rounded-full p-2.5 transition-colors lg:hidden ${light ? "text-ink" : "text-white"}`}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden>
-              {mobileOpen ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 8h16M4 16h16" />}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu: full-screen cream sheet */}
+    // No backdrop-filter on the header itself: it would become the containing
+    // block for the fixed dimmer and shrink it to the bar.
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-5 lg:px-6 lg:pt-5">
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            id="mobile-menu"
+            key="dimmer"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-x-0 top-16 bottom-0 flex flex-col bg-cream px-6 pb-[max(2rem,env(safe-area-inset-bottom))] pt-6 sm:top-18 lg:hidden"
-          >
-            <ul className="flex-1 space-y-1 overflow-y-auto">
-              {navLinks.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.04 * i + 0.05, duration: 0.35 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-ink/45 lg:hidden"
+            onClick={() => setMobileOpen(false)}
+            aria-hidden
+          />
+        )}
+      </AnimatePresence>
+
+      <nav aria-label="Main" className="relative mx-auto max-w-6xl">
+        <div
+          className={`flex h-14 items-center justify-between rounded-full border bg-white/95 pr-1.5 pl-5 backdrop-blur-xl transition-shadow duration-300 sm:h-16 sm:pr-2 sm:pl-6 ${
+            scrolled || mobileOpen
+              ? "border-line shadow-[0_10px_40px_-12px_rgba(11,27,51,0.28)]"
+              : "border-white/60 shadow-[0_4px_20px_-8px_rgba(11,27,51,0.2)]"
+          }`}
+        >
+          <Link href="/" className="flex shrink-0 items-center" aria-label="Home">
+            <BrandLogo priority tone="light" sizeClassName="h-7 w-auto sm:h-8 max-w-[min(100vw-9rem,200px)]" />
+          </Link>
+
+          <ul className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={(e) => onSectionLinkClick(e, link.href)}
+                  className="rounded-full px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-fog hover:text-ink"
                 >
-                  <a
-                    href={link.href}
-                    onClick={(e) => onSectionLinkClick(e, link.href)}
-                    className="flex items-center justify-between border-b border-sand py-4 font-heading text-3xl text-ink"
-                  >
-                    {link.label}
-                    <span className="text-lg text-copper" aria-hidden>→</span>
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-1">
             <a
               href="#quote"
               onClick={(e) => onSectionLinkClick(e, "#quote")}
-              className="mt-6 block rounded-full bg-copper px-6 py-4 text-center text-base font-semibold text-white transition-colors hover:bg-copper-hover"
+              className="hidden items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover sm:inline-flex"
             >
-              Get Your Free Quote
+              Free quote <span aria-hidden>→</span>
             </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-ink text-white transition-colors hover:bg-ink-2 lg:hidden"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+                {mobileOpen ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 9h16M4 15h16" />}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu: a card that drops from the pill */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              id="mobile-menu"
+              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-x-0 top-full mt-2 origin-top overflow-hidden rounded-[28px] bg-white p-2 shadow-[0_30px_80px_-20px_rgba(11,27,51,0.45)] lg:hidden"
+            >
+              <ul>
+                {navLinks.map((link, i) => (
+                  <motion.li
+                    key={link.href}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.03 * i + 0.05, duration: 0.3 }}
+                  >
+                    <a
+                      href={link.href}
+                      onClick={(e) => onSectionLinkClick(e, link.href)}
+                      className="flex items-center justify-between rounded-2xl px-4 py-3.5 font-heading text-2xl font-bold tracking-tight text-ink transition-colors hover:bg-fog"
+                    >
+                      {link.label}
+                      <span className="text-xs font-semibold text-muted tabular-nums">0{i + 1}</span>
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+              <a
+                href="#quote"
+                onClick={(e) => onSectionLinkClick(e, "#quote")}
+                className="mt-2 flex items-center justify-center gap-2 rounded-2xl bg-accent px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-accent-hover"
+              >
+                Get your free quote <span aria-hidden>→</span>
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </header>
   );
 }

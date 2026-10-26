@@ -3,8 +3,9 @@
 import { motion } from "framer-motion";
 import MediaFrame from "@/components/MediaFrame";
 import { HERO } from "@/content/hero";
-import { STATS } from "@/content/stats";
 import { HAS_REVIEWS, OVERALL_RATING, REVIEW_COUNT } from "@/content/reviews";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 function Star() {
   return (
@@ -14,93 +15,101 @@ function Star() {
   );
 }
 
-export default function HeroSection() {
-  const { mobile, panel } = HERO.media;
-
+/** Rises in on mount. Translate only, no fade: the headline is the LCP element. */
+function Rise({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
-    <>
-      <section className="relative h-[100svh] min-h-[560px] overflow-hidden bg-ink md:h-[88vh] md:min-h-[620px]">
-        {/* Phones: footage fills the screen behind the copy */}
-        <div className="absolute inset-0 md:hidden">
-          <MediaFrame item={mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" />
+    <motion.div
+      initial={{ y: 22 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.9, delay, ease }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const card = "rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-md";
+
+/** Inset viewport panel: footage fills a rounded frame, headline on top, actions and proof along the base. */
+export default function HeroSection() {
+  return (
+    <section className="bg-paper p-2.5 sm:p-3 lg:p-4">
+      <div className="relative isolate flex min-h-[calc(100svh-1.25rem)] flex-col overflow-hidden rounded-[28px] bg-ink text-white sm:min-h-[calc(100svh-1.5rem)] lg:min-h-[calc(100svh-2rem)] lg:rounded-[32px]">
+        <div className="absolute inset-0 -z-10">
+          <MediaFrame item={HERO.media.mobile} frame="portrait" sizes="100vw" priority preload="metadata" tone="dark" />
         </div>
+        {/* Legibility scrims */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-1/2 bg-gradient-to-b from-ink/75 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-3/4 bg-gradient-to-t from-ink via-ink/55 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 -z-10 hidden w-2/3 bg-gradient-to-r from-ink/70 to-transparent lg:block" />
 
-        {/* Larger screens: copy on the left, footage in a panel on the right */}
-        <div className="absolute inset-y-0 right-0 hidden w-[46%] md:block">
-          <MediaFrame item={panel} frame="portrait" sizes="46vw" priority preload="metadata" tone="dark" />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/60 to-transparent" />
-        </div>
-
-        {/* Legibility fade behind the copy (phones only) */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-28 bg-gradient-to-b from-black/45 to-transparent md:hidden" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[70%] bg-gradient-to-t from-ink via-ink/60 to-transparent md:hidden" />
-
-        <div className="absolute inset-x-0 bottom-0 z-[3] pb-8 sm:pb-12 md:inset-y-0 md:flex md:items-center md:pb-0 md:pt-16">
-          {/* Slide only, no fade: the headline is the LCP element, so it must be visible on first paint. */}
-          <motion.div
-            initial={{ y: 16 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8"
-          >
-            <div className="md:max-w-[46%]">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/75 sm:text-xs">
-              {HERO.eyebrow}
-            </p>
-            <h1 className="mt-3 max-w-3xl [overflow-wrap:anywhere] text-[2.6rem] font-medium leading-[1.02] text-white sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl">
-              {HERO.headline.plain}{" "}
-              <em className="whitespace-nowrap font-normal text-copper-light">{HERO.headline.accent}</em>
+        <div className="flex flex-1 flex-col justify-between gap-10 px-5 pt-24 pb-5 sm:px-8 sm:pt-28 sm:pb-8 lg:px-12 lg:pt-36 lg:pb-12">
+          <div>
+            <Rise>
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent-light" aria-hidden />
+                {HERO.eyebrow}
+              </p>
+            </Rise>
+            <h1 className="mt-5 max-w-5xl text-[2.75rem] leading-[0.98] font-extrabold tracking-[-0.045em] sm:text-7xl lg:text-[5.75rem] xl:text-[6.5rem]">
+              <Rise delay={0.05}>
+                <span className="block">{HERO.headline.plain}</span>
+              </Rise>
+              <Rise delay={0.16}>
+                <span className="block text-accent-light">{HERO.headline.accent}</span>
+              </Rise>
             </h1>
+          </div>
 
-            <ul className="mt-5 flex flex-wrap gap-2 text-xs font-medium text-white sm:text-sm">
-              {HAS_REVIEWS && (
-                <li className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 backdrop-blur-sm">
-                  <Star />
-                  {OVERALL_RATING.toFixed(1)} · {REVIEW_COUNT}+ Google reviews
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+            <Rise delay={0.3} className="lg:max-w-lg">
+              <p className="max-w-md text-base leading-relaxed text-white/80 sm:text-lg">
+                College-owned window cleaning, pressure washing and house washing across Boston and its western
+                suburbs.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a
+                  href="#quote"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-white px-6 py-4 text-base font-semibold whitespace-nowrap text-ink transition-colors hover:bg-fog sm:flex-none"
+                >
+                  <span className="sm:hidden">Free quote</span>
+                  <span className="hidden sm:inline">Get a free quote</span> <span aria-hidden>→</span>
+                </a>
+                <a
+                  href="#results"
+                  className="inline-flex flex-1 items-center justify-center rounded-full border border-white/30 px-6 py-4 text-base font-semibold whitespace-nowrap text-white backdrop-blur-sm transition-colors hover:bg-white/10 sm:flex-none"
+                >
+                  See results
+                </a>
+              </div>
+            </Rise>
+
+            <Rise delay={0.4} className="order-first lg:order-none">
+              <ul className="grid grid-cols-2 gap-2.5 lg:w-[30rem] lg:gap-3">
+                {HAS_REVIEWS && (
+                  <li className={card}>
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} />
+                      ))}
+                    </div>
+                    <p className="mt-2 font-heading text-2xl font-bold tracking-tight sm:text-3xl">{OVERALL_RATING.toFixed(1)}</p>
+                    <p className="text-xs text-white/70 sm:text-sm">{REVIEW_COUNT}+ Google reviews</p>
+                  </li>
+                )}
+                <li className={card}>
+                  <svg className="h-5 w-5 text-accent-light" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                  </svg>
+                  <p className="mt-2 font-heading text-lg leading-tight font-bold tracking-tight sm:text-xl">{HERO.insuredBadge}</p>
+                  <p className="text-xs text-white/70 sm:text-sm">College owned &amp; operated</p>
                 </li>
-              )}
-              <li className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 backdrop-blur-sm">
-                <svg className="h-3.5 w-3.5 text-copper-light" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-                </svg>
-                {HERO.insuredBadge}
-              </li>
-            </ul>
-
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#quote"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-copper px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-copper-hover"
-              >
-                Get Your Free Quote
-                <span aria-hidden>→</span>
-              </a>
-              <a
-                href="#services"
-                className="inline-flex items-center justify-center rounded-full border border-white/35 px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                See the work
-              </a>
-            </div>
-            </div>
-          </motion.div>
+              </ul>
+            </Rise>
+          </div>
         </div>
-      </section>
-
-      {/* Company-wide trust stats */}
-      <div className="border-b border-sand bg-cream">
-        <dl className="mx-auto grid max-w-5xl grid-cols-3 divide-x divide-sand">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center px-2 py-5 text-center sm:py-7">
-              <dt className="order-2 mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted sm:text-xs">
-                {stat.label}
-              </dt>
-              <dd className="order-1 font-heading text-2xl text-ink sm:text-4xl">{stat.value}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
-    </>
+    </section>
   );
 }

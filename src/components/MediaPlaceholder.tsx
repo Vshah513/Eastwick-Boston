@@ -17,7 +17,7 @@ export default function MediaPlaceholder({
       className={`absolute inset-0 flex items-center ${
         align === "left" ? "justify-start pl-[12%]" : align === "right" ? "justify-end pr-[12%]" : "justify-center"
       } ${
-        dark ? "bg-ink-2 text-muted-dark" : "bg-sand text-muted"
+        dark ? "bg-ink-2 text-muted-dark" : "bg-line text-muted"
       } ${className}`}
       role="img"
       aria-label={`Placeholder: ${label}`}

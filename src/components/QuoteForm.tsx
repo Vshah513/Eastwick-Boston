@@ -16,7 +16,7 @@ import { SELECT_SERVICE_EVENT } from "@/lib/quote-events";
 const EMPTY_FIELDS = { name: "", email: "", phone: "", property: "", address: "", message: "" };
 
 const inputClass =
-  "w-full rounded-xl border border-sand bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-stone-400 focus:border-copper aria-[invalid=true]:border-red-600";
+  "w-full rounded-[14px] border border-transparent bg-fog px-4 py-3.5 text-base text-ink outline-none transition-[border-color,background-color,box-shadow] placeholder:text-muted/50 focus:border-accent focus:bg-white focus:ring-4 focus:ring-accent/15 aria-[invalid=true]:border-red-600";
 const labelClass = "mb-1.5 block text-sm font-semibold text-ink";
 
 export default function QuoteForm() {
@@ -98,12 +98,12 @@ export default function QuoteForm() {
   if (submitted) {
     return (
       <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="py-14 text-center" role="status">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-copper/10">
-          <svg className="h-8 w-8 text-copper" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden>
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
+          <svg className="h-8 w-8 text-accent" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden>
             <path strokeLinecap="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-3xl font-medium text-ink">Thank You!</h3>
+        <h3 className="text-3xl font-extrabold text-ink">Thank You!</h3>
         <p className="mx-auto mt-3 max-w-md text-muted">
           We&apos;ve received your request. Our team will get back to you within 24 hours with a detailed quote.
         </p>
@@ -115,7 +115,7 @@ export default function QuoteForm() {
             setSmsTransactionalConsent(false);
             setSmsPromotionalConsent(false);
           }}
-          className="mt-6 font-semibold text-copper underline underline-offset-4 hover:text-copper-hover"
+          className="mt-6 font-semibold text-accent underline underline-offset-4 hover:text-accent-hover"
         >
           Submit another request
         </button>
@@ -138,7 +138,7 @@ export default function QuoteForm() {
                 onClick={() => toggleService(service.id)}
                 aria-pressed={on}
                 className={`rounded-full border px-4 py-2.5 text-sm font-medium transition-colors ${
-                  on ? "border-copper bg-copper text-white" : "border-sand bg-white text-ink hover:border-stone-400"
+                  on ? "border-ink bg-ink text-white" : "border-line bg-white text-ink hover:border-ink/40"
                 }`}
               >
                 {on && <span aria-hidden>✓ </span>}
@@ -216,14 +216,14 @@ export default function QuoteForm() {
       )}
 
       {/* Optional SMS consent: two separate unchecked boxes kept directly above the submit button for A2P compliance */}
-      <div className="space-y-3 rounded-2xl bg-cream-2 p-4">
+      <div className="space-y-3 rounded-2xl border border-line p-4">
         <div className="flex items-start gap-3">
           <input
             id="smsTransactionalConsent"
             type="checkbox"
             checked={smsTransactionalConsent}
             onChange={(e) => setSmsTransactionalConsent(e.target.checked)}
-            className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-copper"
+            className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-accent"
           />
           <label htmlFor="smsTransactionalConsent" className="cursor-pointer text-xs leading-relaxed text-muted sm:text-sm">
             {SMS_TRANSACTIONAL_CONSENT_STATEMENT}
@@ -235,7 +235,7 @@ export default function QuoteForm() {
             type="checkbox"
             checked={smsPromotionalConsent}
             onChange={(e) => setSmsPromotionalConsent(e.target.checked)}
-            className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-copper"
+            className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-accent"
           />
           <label htmlFor="smsPromotionalConsent" className="cursor-pointer text-xs leading-relaxed text-muted sm:text-sm">
             {SMS_PROMOTIONAL_CONSENT_STATEMENT}
@@ -243,11 +243,11 @@ export default function QuoteForm() {
         </div>
         <p className="text-xs leading-relaxed text-muted sm:text-sm">
           View our{" "}
-          <Link href={PRIVACY_POLICY_PATH} target="_blank" className="font-medium text-copper underline underline-offset-2 hover:text-copper-hover">
+          <Link href={PRIVACY_POLICY_PATH} target="_blank" className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
             Privacy Policy
           </Link>{" "}
           and{" "}
-          <Link href={TERMS_PATH} target="_blank" className="font-medium text-copper underline underline-offset-2 hover:text-copper-hover">
+          <Link href={TERMS_PATH} target="_blank" className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
             Terms and Conditions
           </Link>
           .
@@ -257,7 +257,7 @@ export default function QuoteForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-full bg-copper px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-copper-hover disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
+        className="w-full rounded-full bg-accent px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
       >
         {loading ? "Sending…" : "Request Free Quote"}
       </button>

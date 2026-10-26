@@ -6,7 +6,7 @@ import type { Area } from "@/content/types";
 import { MAP_DEFAULT_VIEW } from "@/content/areas";
 import { BUSINESS } from "@/lib/business";
 
-/** Free vector tiles (no API key, commercial use allowed). Muted style to match the cream palette. */
+/** Free vector tiles (no API key, commercial use allowed). Muted grey style that sits quietly under the navy pins. */
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
 const FOCUS_ZOOM = 11.5;
 /** Copied from node_modules by scripts/copy-maplibre-worker.mjs (the bundler doesn't emit it). */
@@ -57,11 +57,17 @@ export default function ServiceAreaMap({
   areas,
   active,
   onSelect,
+  fitPadding = 60,
+  resetClassName = "top-3 left-3",
 }: {
   areas: Area[];
   /** Index into `areas` of the selected city, or null. */
   active: number | null;
   onSelect: (index: number | null) => void;
+  /** Space kept clear around the pins when fitting them, e.g. a larger left value under an overlay panel. */
+  fitPadding?: number | { top: number; bottom: number; left: number; right: number };
+  /** Position classes for the "Show all areas" button. */
+  resetClassName?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -70,9 +76,13 @@ export default function ServiceAreaMap({
   const [nearViewport, setNearViewport] = useState(false);
   const [status, setStatus] = useState<"idle" | "ready" | "failed">("idle");
 
+  const fitPaddingRef = useRef(fitPadding);
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+  useEffect(() => {
+    fitPaddingRef.current = fitPadding;
+  });
 
   const pins = pinnedAreas(areas);
 
@@ -103,7 +113,7 @@ export default function ServiceAreaMap({
             [pins[0].lng, pins[0].lat],
           ] as [[number, number], [number, number]]
         ),
-        { padding: 60, maxZoom: 11 }
+        { padding: fitPadding, maxZoom: 11 }
       );
     } else {
       const c = pins[0] ?? MAP_DEFAULT_VIEW.center;
@@ -162,6 +172,8 @@ export default function ServiceAreaMap({
         map.on("load", () => {
           if (cancelled) return;
           setStatus("ready");
+          // The compact attribution opens expanded on first load; start it collapsed (the "i" still opens it).
+          containerRef.current?.querySelector(".maplibregl-ctrl-attrib")?.classList.remove("maplibregl-compact-show");
           if (markers.size > 0) resetViewRef.current();
         });
         map.on("error", (e) => {
@@ -199,8 +211,17 @@ export default function ServiceAreaMap({
     if (!entry || typeof area?.lat !== "number" || typeof area?.lng !== "number") return;
     entry.el.classList.add("is-active");
     entry.popup.setLngLat([area.lng, area.lat]).addTo(map);
+    // Shift by half the uneven padding so the town lands in the clear part of the map. A one-off
+    // offset, not `padding`, which MapLibre keeps on the camera and would add to fitBounds later.
+    const p = fitPaddingRef.current;
+    const offset: [number, number] = typeof p === "number" ? [0, 0] : [(p.left - p.right) / 2, (p.top - p.bottom) / 2];
     // essential: false → skipped (instant jump) when the visitor prefers reduced motion.
-    map.flyTo({ center: [area.lng, area.lat], zoom: Math.max(map.getZoom(), FOCUS_ZOOM), essential: false });
+    map.flyTo({
+      center: [area.lng, area.lat],
+      zoom: Math.max(map.getZoom(), FOCUS_ZOOM),
+      offset,
+      essential: false,
+    });
   }, [active, areas, status]);
 
   return (
@@ -214,10 +235,10 @@ export default function ServiceAreaMap({
       />
 
       {status !== "ready" && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-cream-2 text-sm text-muted">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-fog text-sm text-muted">
           {status === "failed" ? (
             <a
-              className="pointer-events-auto font-semibold text-copper underline underline-offset-4"
+              className="pointer-events-auto font-semibold text-accent underline underline-offset-4"
               href={`https://www.google.com/maps/search/${encodeURIComponent(MAP_DEFAULT_VIEW.label + ", " + BUSINESS.regionLong)}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -237,7 +258,7 @@ export default function ServiceAreaMap({
             onSelect(null);
             resetView();
           }}
-          className="absolute top-3 left-3 z-10 rounded-full border border-sand bg-cream/95 px-3.5 py-2 text-xs font-semibold text-ink shadow-sm backdrop-blur-sm transition-colors hover:border-copper hover:text-copper"
+          className={`absolute ${resetClassName} z-10 rounded-full border border-line bg-paper/95 px-3.5 py-2 text-xs font-semibold text-ink shadow-sm backdrop-blur-sm transition-colors hover:border-accent hover:text-accent`}
         >
           {pins.length > 1 ? "Show all areas" : `Reset to ${MAP_DEFAULT_VIEW.label}`}
         </button>

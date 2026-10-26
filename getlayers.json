@@ -1,0 +1,25 @@
+{
+  "project": "eastwick-boston",
+  "style": {
+    "base": "lumora-style",
+    "name": "Harbor navy",
+    "note": "Lumora's structure (light editorial, one rationed accent, soft radii) re-tinted to the Eastwick logo. Tokens live in src/app/globals.css.",
+    "palette": { "background": "#ffffff", "secondary": "#f2f5f9", "primary": "#0b1b33", "accent": "#1f5fbf", "accentOnDark": "#7fb2ff" },
+    "fonts": { "display": "manrope", "body": "inter" }
+  },
+  "revealChoreography": "No loader (mobile-first local service, LCP first). Hero rises on mount; section headings reveal per line on view (RevealLines).",
+  "sections": [
+    { "component": "Navbar", "composition": "stride-nav" },
+    { "component": "HeroSection", "composition": "baseline-hero" },
+    { "component": "TownTicker", "composition": "vexon-marquee" },
+    { "component": "ServicesRail", "composition": "lumora-services" },
+    { "component": "ResultsShowcase", "composition": "marcus-vane-voices" },
+    { "component": "StatPanel", "composition": "lumora-stats" },
+    { "component": "Founders", "composition": "marcus-vane-ventures" },
+    { "component": "TestimonialsSection", "composition": "artist-statement" },
+    { "component": "ServiceAreas", "composition": "clarix-footer (inset glass panel over map)" },
+    { "component": "FaqSection", "composition": "artist-faq" },
+    { "component": "QuoteSection", "composition": "artist-cta" },
+    { "component": "SiteFooter", "composition": "lumora-footer" }
+  ]
+}

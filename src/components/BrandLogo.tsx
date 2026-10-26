@@ -3,8 +3,8 @@ import { BUSINESS } from "@/lib/business";
 
 /**
  * Two background-knockout variants (transparent PNGs):
- *  - "light": navy wordmark, for light surfaces (scrolled navbar, cream sections).
- *  - "dark":  white wordmark, for dark surfaces (hero, footer).
+ *  - "light": navy wordmark, for light surfaces (navbar pill, light sections).
+ *  - "dark":  white wordmark, for dark surfaces (footer, dark panels).
  */
 export const BRAND_LOGO_LIGHT_SRC = "/media/brand/logo-for-light.png";
 export const BRAND_LOGO_DARK_SRC = "/media/brand/logo-for-dark.png";

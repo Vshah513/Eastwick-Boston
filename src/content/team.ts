@@ -1,21 +1,22 @@
 import type { TeamMember } from "./types";
 
 /**
- * TODO: confirm the Boston team. Bios avoid time-sensitive phrases
+ * The co-founders, as the client wrote them. Bios avoid time-sensitive phrases
  * ("rising junior", "this summer") so they don't go stale.
- * Raw headshots go in public/uploads/team/<first-last>/ (square, at least 800×800).
+ * Raw headshots go in public/uploads/team/<first-last>/ (portrait, at least 1000px tall).
  */
 export const TEAM: TeamMember[] = [
   {
-    name: "Henry Shelton",
-    title: "CEO",
-    bio: "Henry studies at Babson College. He started Eastwick by going door to door pitching window cleaning, and has grown it into a company of 25+ employees across multiple locations.",
-    headshot: "/media/team/henry.jpg",
-    headshotFocal: "50% 22%",
+    name: "Alex Boruvka",
+    title: "Co-Founder",
+    bio: "Alex has been in the window cleaning business for over 3 years, starting with his own company, Northview Services. Now he has co-founded Eastwick Boston, bringing his experience and expertise in the industry.",
+    // TODO: add headshot once the client sends it (public/uploads/team/alex-boruvka/).
   },
   {
-    name: "Paul Helms",
-    title: "Project Manager",
-    bio: "Paul studies at Appalachian State University. He manages technicians on job sites and helps with client outreach.",
+    name: "Henry Shelton",
+    title: "Co-Founder",
+    bio: "Henry started his first window cleaning company, Eastwick External Services, in Raleigh, NC. Now, while a student at Babson College, he has founded a second location in Boston, MA.",
+    headshot: "/media/team/henry.jpg",
+    headshotFocal: "50% 22%",
   },
 ];
