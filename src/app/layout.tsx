@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import MotionProvider from "@/components/MotionProvider";
-import { BUSINESS, BUSINESS_LOCATION } from "@/lib/business";
+import { BUSINESS, BUSINESS_LOCATION, SITE_URL } from "@/lib/business";
 import { SERVICES } from "@/content/services";
 import { AREAS } from "@/content/areas";
 import "./globals.css";
@@ -25,10 +25,9 @@ const title = `${BUSINESS.name} | Window Cleaning & Pressure Washing in ${BUSINE
 const description = `College-owned exterior cleaning in ${BUSINESS_LOCATION}${
   areaNames.length > 1 ? ` and nearby ${areaNames.slice(1, 5).join(", ")}` : ""
 }: ${serviceList}. Fully insured, satisfaction guaranteed, free estimates.`;
-const ogImage = { url: "/media/og/cover.jpg", width: 1200, height: 630, alt: `${BUSINESS.name} crew at work` };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BUSINESS.website),
+  metadataBase: new URL(SITE_URL),
   title: { default: title, template: `%s | ${BUSINESS.name}` },
   description,
   keywords: serviceNames.flatMap((s) => [
@@ -44,9 +43,9 @@ export const metadata: Metadata = {
     siteName: BUSINESS.name,
     title,
     description,
-    images: [ogImage],
   },
-  twitter: { card: "summary_large_image", title, description, images: [ogImage.url] },
+  // Preview images come from app/opengraph-image.tsx and app/twitter-image.tsx.
+  twitter: { card: "summary_large_image", title, description },
   robots: { index: true, follow: true },
 };
 

@@ -1,4 +1,4 @@
-import { BUSINESS, hasPlaceholders } from "@/lib/business";
+import { BUSINESS, SITE_URL, hasPlaceholders } from "@/lib/business";
 import { SERVICES } from "@/content/services";
 import { AREAS } from "@/content/areas";
 
@@ -12,10 +12,10 @@ export function localBusinessJsonLd() {
     "@type": "LocalBusiness",
     name: BUSINESS.name,
     description: `College-owned exterior cleaning in ${BUSINESS.city}, ${BUSINESS.region}: ${SERVICES.map((s) => s.title).join(", ")}.`,
-    url: BUSINESS.website,
+    url: SITE_URL,
     telephone: BUSINESS.phoneE164,
     email: BUSINESS.email,
-    image: `${BUSINESS.website}/media/og/cover.jpg`,
+    image: `${SITE_URL}/opengraph-image`,
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",

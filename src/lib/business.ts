@@ -48,6 +48,19 @@ export const BUSINESS = {
 
 export type SocialLabel = (typeof BUSINESS.socials)[number]["label"];
 
+/**
+ * Absolute origin for metadata, the sitemap and link previews. Until the real
+ * domain is set in `website`, falls back to the Vercel deployment URL so shared
+ * links still get a working preview image.
+ */
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+export const SITE_URL =
+  BUSINESS.website !== "https://example.com"
+    ? BUSINESS.website
+    : vercelHost
+      ? `https://${vercelHost}`
+      : `http://localhost:${process.env.PORT || 3000}`;
+
 export const BUSINESS_LOCATION = `${BUSINESS.city}, ${BUSINESS.region}`;
 export const PHONE_HREF = `tel:${BUSINESS.phoneE164}`;
 export const SMS_HREF = `sms:${BUSINESS.phoneE164}`;
