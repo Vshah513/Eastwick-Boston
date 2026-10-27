@@ -2,7 +2,7 @@ import type { MediaItem } from "./types";
 
 export const HERO = {
   /** `accent` renders in the light accent blue. */
-  headline: { plain: "Crystal Clear Results,", accent: "Every Time." },
+  headline: { plain: "Your Best Is", accent: "Our Standard." },
   /** Small line above the headline. Separate from BUSINESS.city, which is still unconfirmed. */
   eyebrow: "Window cleaning · Greater Boston",
   /**

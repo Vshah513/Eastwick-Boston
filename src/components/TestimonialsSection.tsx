@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import RevealLines, { Eyebrow } from "@/components/RevealLines";
 import ScrollReveal from "@/components/ScrollReveal";
 import { BUSINESS } from "@/lib/business";
@@ -9,7 +6,6 @@ import type { Review } from "@/content/types";
 
 // The fuller reviews read best as featured statements, so they lead.
 const ORDERED = [...REVIEWS].sort((a, b) => b.text.length - a.text.length);
-const pad = (n: number) => String(n).padStart(2, "0");
 
 function Stars({ count, className = "h-4 w-4" }: { count: number; className?: string }) {
   return (
@@ -34,87 +30,39 @@ function GoogleG({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
-function ReviewCard({ review, index }: { review: Review; index: number }) {
+function ReviewCard({ review }: { review: Review }) {
   return (
-    <figure
-      data-index={index}
-      aria-label={`Review ${index + 1} of ${ORDERED.length}`}
-      className="flex w-[86%] shrink-0 snap-start flex-col justify-between rounded-[28px] border border-line bg-white p-7 sm:w-[70%] sm:p-10 lg:w-[62%] lg:p-14"
-    >
+    <figure className="flex w-[78vw] max-w-[360px] shrink-0 flex-col justify-between rounded-3xl border border-line bg-white p-6 sm:w-[340px] lg:w-[380px] lg:p-7">
       <div>
-        <svg className="h-8 w-8 text-accent sm:h-10 sm:w-10" viewBox="0 0 32 32" fill="currentColor" aria-hidden>
+        <svg className="h-6 w-6 text-accent" viewBox="0 0 32 32" fill="currentColor" aria-hidden>
           <path d="M9.3 26C5.2 26 2 22.7 2 18.4 2 11.6 7.1 6.3 13.6 6v3.6c-3.4.6-5.8 3-6.3 6.1.6-.2 1.3-.3 2-.3 3.8 0 6.5 2.7 6.5 5.4S13.2 26 9.3 26Zm16.4 0c-4.1 0-7.3-3.3-7.3-7.6 0-6.8 5.1-12.1 11.6-12.4v3.6c-3.4.6-5.8 3-6.3 6.1.6-.2 1.3-.3 2-.3 3.8 0 6.5 2.7 6.5 5.4S29.6 26 25.7 26Z" />
         </svg>
-        <blockquote className="mt-6 font-heading text-lg leading-snug font-semibold tracking-[-0.02em] text-ink sm:text-2xl lg:text-[1.9rem] lg:leading-[1.3]">
-          {review.text}
-        </blockquote>
+        <blockquote className="mt-4 text-[15px] leading-relaxed font-medium text-ink lg:text-base">{review.text}</blockquote>
       </div>
-      <figcaption className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">
+      <figcaption className="mt-6 flex items-center justify-between gap-3 border-t border-line pt-4">
         <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ink font-heading text-base font-bold text-white" aria-hidden>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink font-heading text-sm font-bold text-white" aria-hidden>
             {review.name[0]}
           </span>
           <div>
-            <p className="font-semibold text-ink">{review.name}</p>
-            {review.date ? <p className="text-sm text-muted">{review.date}</p> : <p className="text-sm text-muted">Google review</p>}
+            <p className="text-sm font-semibold text-ink">{review.name}</p>
+            <p className="text-xs text-muted">{review.date ?? "Google review"}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Stars count={review.rating} className="h-4 w-4" />
-          <GoogleG className="hidden h-5 w-5 sm:block" />
+        <div className="flex items-center gap-1.5">
+          <Stars count={review.rating} className="h-3.5 w-3.5" />
+          <GoogleG className="h-4 w-4" />
         </div>
       </figcaption>
     </figure>
   );
 }
 
-/** One review at a time, set large; swipe on phones or use the arrows. */
+/** Reviews drift past on a loop; hover, focus or touch pauses them so one can be read. */
 export default function TestimonialsSection() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [current, setCurrent] = useState(0);
-
-  // The card nearest the track's start edge is current (works for swipes, arrows and keyboard
-  // scrolling alike). Once scrolled to the end, the last card counts as current.
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) {
-        setCurrent(ORDERED.length - 1);
-        return;
-      }
-      const start = track.getBoundingClientRect().left + parseFloat(getComputedStyle(track).scrollPaddingLeft || "0");
-      let best = 0;
-      let bestDist = Infinity;
-      track.querySelectorAll("figure").forEach((el, i) => {
-        const d = Math.abs(el.getBoundingClientRect().left - start);
-        if (d < bestDist) [best, bestDist] = [i, d];
-      });
-      setCurrent(best);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    track.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      track.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const go = (dir: 1 | -1) => {
-    const next = Math.min(Math.max(current + dir, 0), ORDERED.length - 1);
-    trackRef.current
-      ?.querySelector<HTMLElement>(`figure[data-index="${next}"]`)
-      ?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-  };
-
   if (!HAS_REVIEWS) return null;
-
-  const arrow =
-    "flex h-12 w-12 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white disabled:pointer-events-none disabled:opacity-30";
+  // ~6s per review keeps the drift readable whatever the count.
+  const duration = `${Math.max(40, ORDERED.length * 6)}s`;
 
   return (
     <section id="reviews" className="overflow-hidden bg-fog py-20 sm:py-24 lg:py-32">
@@ -139,39 +87,34 @@ export default function TestimonialsSection() {
             </div>
           </ScrollReveal>
         </div>
+      </div>
 
-        <div
-          ref={trackRef}
-          className="no-scrollbar mt-12 -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto overscroll-x-contain px-4 sm:-mx-6 sm:mt-16 sm:scroll-px-6 sm:gap-6 sm:px-6 lg:mx-0 lg:scroll-px-0 lg:px-0"
-          aria-roledescription="carousel"
-          aria-label="Customer reviews"
-        >
-          {ORDERED.map((review, i) => (
-            <ReviewCard key={`${review.name}-${i}`} review={review} index={i} />
+      <div
+        className="reviews mt-12 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)] sm:mt-16 no-scrollbar"
+        role="region"
+        aria-label="Customer reviews"
+        tabIndex={0}
+      >
+        <div className="reviews-track flex w-max" style={{ animationDuration: duration }}>
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex shrink-0 gap-4 pr-4 sm:gap-5 sm:pr-5" aria-hidden={copy === 1 || undefined}>
+              {ORDERED.map((review, i) => (
+                <ReviewCard key={`${review.name}-${i}`} review={review} />
+              ))}
+            </div>
           ))}
         </div>
+      </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <button type="button" onClick={() => go(-1)} disabled={current === 0} className={arrow} aria-label="Previous review">
-              <span aria-hidden>←</span>
-            </button>
-            <button type="button" onClick={() => go(1)} disabled={current === ORDERED.length - 1} className={arrow} aria-label="Next review">
-              <span aria-hidden>→</span>
-            </button>
-            <p className="ml-2 text-sm font-semibold text-ink tabular-nums" aria-live="polite">
-              {pad(current + 1)} <span className="text-muted">/ {pad(ORDERED.length)}</span>
-            </p>
-          </div>
-          <a
-            href={BUSINESS.googleReviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
-          >
-            Read all reviews on Google <span aria-hidden>↗</span>
-          </a>
-        </div>
+      <div className="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <a
+          href={BUSINESS.googleReviewsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+        >
+          Read all reviews on Google <span aria-hidden>↗</span>
+        </a>
       </div>
     </section>
   );

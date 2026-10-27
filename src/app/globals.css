@@ -95,6 +95,16 @@
   animation-play-state: paused;
 }
 
+/* Reviews (src/components/TestimonialsSection.tsx): same two-halves loop, paused on hover, focus or touch */
+.reviews-track {
+  animation: ticker 60s linear infinite;
+}
+.reviews:hover .reviews-track,
+.reviews:focus-within .reviews-track,
+.reviews:active .reviews-track {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -106,7 +116,8 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .ticker-track {
+  .ticker-track,
+  .reviews-track {
     animation: none;
   }
 }

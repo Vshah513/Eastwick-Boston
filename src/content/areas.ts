@@ -1,12 +1,12 @@
 import type { Area } from "./types";
 
 /**
- * Towns served, in the order the client listed them. Boston is the HQ.
+ * Towns served, in the order the client listed them. Wellesley is the HQ.
  * `lat`/`lng` drop a pin on the map.
  */
 export const AREAS: Area[] = [
-  { name: "Boston", hq: true, lat: 42.3601, lng: -71.0589 },
-  { name: "Wellesley", lat: 42.2968, lng: -71.2924 },
+  { name: "Boston", lat: 42.3601, lng: -71.0589 },
+  { name: "Wellesley", hq: true, lat: 42.2968, lng: -71.2924 },
   { name: "Weston", lat: 42.3668, lng: -71.3031 },
   { name: "Newton", lat: 42.337, lng: -71.2092 },
   { name: "Needham", lat: 42.2809, lng: -71.2378 },

@@ -18,7 +18,7 @@ export const REVIEWS: Review[] = [
 ];
 
 /** Shown as "{REVIEW_COUNT}+ reviews". Update from the Google profile. */
-export const REVIEW_COUNT = 20;
+export const REVIEW_COUNT = 70;
 export const OVERALL_RATING = 5.0;
 
 export const HAS_REVIEWS = REVIEWS.length > 0;

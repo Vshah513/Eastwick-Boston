@@ -62,8 +62,7 @@ export default function SiteFooter({
             <div className="col-span-2 lg:col-span-4">
               <BrandLogo tone="dark" sizeClassName="h-10 w-auto max-w-[220px]" />
               <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-dark">
-                College-owned exterior cleaning in {BUSINESS_LOCATION} and the western suburbs. Crystal clear results,
-                every time.
+                College-owned exterior cleaning in {BUSINESS_LOCATION} and the western suburbs. Your best is our standard.
               </p>
               <div className="mt-6 flex gap-2.5">
                 {BUSINESS.socials.map((s) => (
