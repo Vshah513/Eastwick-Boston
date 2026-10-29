@@ -11,6 +11,13 @@ import type { MediaItem, Transformation } from "./types";
  */
 export const TRANSFORMATIONS: Transformation[] = [
   {
+    id: "walkway",
+    title: "Walkway pressure wash",
+    description: "Algae and dirt washed off for a walkway that looks brand new.",
+    before: { kind: "image", src: "/media/services/Pressure%20Wash%20-%20Before.jpeg", orientation: "landscape", alt: "Darkened concrete walkway before pressure washing" },
+    after: { kind: "image", src: "/media/services/IMG_0803.jpg", orientation: "landscape", alt: "Clean concrete walkway after pressure washing" },
+  },
+  {
     id: "house-wash",
     title: "House wash",
     description: "Dirt, algae and built-up grime washed away for a like-new exterior.",
@@ -24,13 +31,6 @@ export const TRANSFORMATIONS: Transformation[] = [
     description: "Film and grime cleared from glass, frames and sills.",
     before: { kind: "image", src: "/media/transformations/windows-before-photo.jpg", orientation: "portrait", focal: "50% 60%", alt: "Dirty ground-floor windows before cleaning" },
     after: { kind: "image", src: "/media/transformations/windows-after-photo.jpg", orientation: "portrait", focal: "50% 60%", alt: "Clear, streak-free windows after cleaning" },
-  },
-  {
-    id: "walkway",
-    title: "Walkway pressure wash",
-    description: "Algae and dirt washed off for a walkway that looks brand new.",
-    before: { kind: "image", src: "/media/services/Pressure%20Wash%20-%20Before.jpeg", orientation: "landscape", alt: "Darkened concrete walkway before pressure washing" },
-    after: { kind: "image", src: "/media/services/IMG_0803.jpg", orientation: "landscape", alt: "Clean concrete walkway after pressure washing" },
   },
 ];
 
