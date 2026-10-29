@@ -89,7 +89,7 @@ export default function ResultsShowcase() {
                   frame={item.tall ? "portrait" : isDesktop || landscape ? "landscape" : "portrait"}
                   aspectClassName={
                     item.tall
-                      ? "mx-auto max-w-[min(100%,26rem)] aspect-[1179/2083]"
+                      ? "mx-auto max-w-[min(100%,30rem)] aspect-[3/4]"
                       : landscape
                         ? "aspect-[4/3]"
                         : "aspect-[4/5] sm:aspect-[4/3]"

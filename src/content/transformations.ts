@@ -22,15 +22,16 @@ export const TRANSFORMATIONS: Transformation[] = [
     title: "House wash",
     description: "Dirt, algae and built-up grime washed away for a like-new exterior.",
     tall: true,
-    before: { kind: "image", src: "/media/services/IMG_1264.PNG", orientation: "portrait", fit: "cover", alt: "House exterior before a house wash" },
-    after: { kind: "image", src: "/media/services/IMG_1263.PNG", orientation: "portrait", fit: "cover", alt: "House exterior after a house wash" },
+    before: { kind: "image", src: "/media/services/IMG_3668.HEIC.jpg", orientation: "portrait", fit: "cover", alt: "House exterior before a house wash" },
+    after: { kind: "image", src: "/media/services/IMG_3673.HEIC.jpg", orientation: "portrait", fit: "cover", alt: "House exterior after a house wash" },
   },
   {
     id: "windows",
     title: "Window cleaning",
     description: "Film and grime cleared from glass, frames and sills.",
-    before: { kind: "image", src: "/media/transformations/windows-before-photo.jpg", orientation: "portrait", focal: "50% 60%", alt: "Dirty ground-floor windows before cleaning" },
-    after: { kind: "image", src: "/media/transformations/windows-after-photo.jpg", orientation: "portrait", focal: "50% 60%", alt: "Clear, streak-free windows after cleaning" },
+    tall: true,
+    before: { kind: "image", src: "/media/services/Windowcleaning%20before.jpg", orientation: "portrait", alt: "Dirty ground-floor windows before cleaning" },
+    after: { kind: "image", src: "/media/services/windowcleaning%20after.jpg", orientation: "portrait", alt: "Clear, streak-free windows after cleaning" },
   },
 ];
 
