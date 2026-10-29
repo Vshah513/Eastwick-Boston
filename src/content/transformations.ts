@@ -14,8 +14,9 @@ export const TRANSFORMATIONS: Transformation[] = [
     id: "house-wash",
     title: "House wash",
     description: "Dirt, algae and built-up grime washed away for a like-new exterior.",
-    before: { kind: "image", src: "/media/transformations/driveway-before-photo.jpg", orientation: "landscape", alt: "Stained, weathered concrete driveway before pressure washing" },
-    after: { kind: "image", src: "/media/transformations/driveway-after-photo.jpg", orientation: "landscape", alt: "Bright, evenly clean concrete driveway after pressure washing" },
+    tall: true,
+    before: { kind: "image", src: "/media/services/IMG_1264.PNG", orientation: "portrait", fit: "cover", alt: "House exterior before a house wash" },
+    after: { kind: "image", src: "/media/services/IMG_1263.PNG", orientation: "portrait", fit: "cover", alt: "House exterior after a house wash" },
   },
   {
     id: "windows",
@@ -28,8 +29,8 @@ export const TRANSFORMATIONS: Transformation[] = [
     id: "walkway",
     title: "Walkway pressure wash",
     description: "Algae and dirt washed off for a walkway that looks brand new.",
-    before: { kind: "image", src: "/media/transformations/walkway-before-photo.jpg", orientation: "landscape", alt: "Darkened concrete walkway before pressure washing" },
-    after: { kind: "image", src: "/media/transformations/walkway-after-photo.jpg", orientation: "landscape", alt: "Clean concrete walkway after pressure washing" },
+    before: { kind: "image", src: "/media/services/Pressure%20Wash%20-%20Before.jpeg", orientation: "landscape", alt: "Darkened concrete walkway before pressure washing" },
+    after: { kind: "image", src: "/media/services/IMG_0803.jpg", orientation: "landscape", alt: "Clean concrete walkway after pressure washing" },
   },
 ];
 

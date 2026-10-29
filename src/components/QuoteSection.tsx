@@ -1,7 +1,7 @@
 import QuoteForm from "@/components/QuoteForm";
 import RevealLines, { Eyebrow } from "@/components/RevealLines";
 import ScrollReveal from "@/components/ScrollReveal";
-import SocialIcon from "@/components/SocialIcon";
+import SocialLinks from "@/components/SocialLinks";
 import { BUSINESS, PHONE_HREF, SMS_HREF } from "@/lib/business";
 
 const promises = [
@@ -78,20 +78,11 @@ export default function QuoteSection() {
               </li>
             ))}
           </ul>
-          <div className="mt-5 flex gap-2.5">
-            {BUSINESS.socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${BUSINESS.name} on ${s.label}`}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-white hover:bg-white hover:text-ink"
-              >
-                <SocialIcon label={s.label} />
-              </a>
-            ))}
-          </div>
+          <p className="mt-4 text-sm text-muted-dark">
+            <span className="font-semibold text-white">Hours:</span> {BUSINESS.hours}
+          </p>
+          <p className="mt-6 mb-3 text-sm font-semibold text-white">Follow our work</p>
+          <SocialLinks />
         </ScrollReveal>
 
         <ScrollReveal delay={0.1} className="lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1">

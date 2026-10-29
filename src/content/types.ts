@@ -46,6 +46,8 @@ export type Transformation = {
   description: string;
   before: MediaItem;
   after: MediaItem;
+  /** Show the slider in a tall, centered frame matching a phone-shaped photo, so it fills the frame uncropped. */
+  tall?: boolean;
 };
 
 export type Review = {

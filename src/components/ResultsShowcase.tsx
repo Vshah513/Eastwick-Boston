@@ -86,8 +86,14 @@ export default function ResultsShowcase() {
                 <BeforeAfterSlider
                   item={item}
                   featured
-                  frame={isDesktop || landscape ? "landscape" : "portrait"}
-                  aspectClassName={landscape ? "aspect-[4/3]" : "aspect-[4/5] sm:aspect-[4/3]"}
+                  frame={item.tall ? "portrait" : isDesktop || landscape ? "landscape" : "portrait"}
+                  aspectClassName={
+                    item.tall
+                      ? "mx-auto max-w-[min(100%,26rem)] aspect-[1179/2083]"
+                      : landscape
+                        ? "aspect-[4/3]"
+                        : "aspect-[4/5] sm:aspect-[4/3]"
+                  }
                   sizes="(min-width: 1280px) 800px, (min-width: 1024px) 66vw, 100vw"
                   captionClassName="lg:hidden"
                 />

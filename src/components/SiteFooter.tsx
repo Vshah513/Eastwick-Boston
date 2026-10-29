@@ -1,6 +1,6 @@
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
-import SocialIcon from "@/components/SocialIcon";
+import SocialLinks from "@/components/SocialLinks";
 import {
   BUSINESS,
   BUSINESS_LOCATION,
@@ -64,20 +64,7 @@ export default function SiteFooter({
               <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-dark">
                 College-owned exterior cleaning in {BUSINESS_LOCATION} and the western suburbs. Your best is our standard.
               </p>
-              <div className="mt-6 flex gap-2.5">
-                {BUSINESS.socials.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${BUSINESS.name} on ${s.label}`}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-white hover:bg-white hover:text-ink"
-                  >
-                    <SocialIcon label={s.label} />
-                  </a>
-                ))}
-              </div>
+              <SocialLinks className="mt-6" />
               {BUSINESS.showRaleighLink && (
                 <a href={BUSINESS.raleighUrl} className={`mt-5 inline-block ${linkClass}`}>
                   Also serving Raleigh, NC ↗

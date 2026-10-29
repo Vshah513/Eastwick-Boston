@@ -28,10 +28,15 @@ export const BUSINESS = {
   region: "MA",
   regionLong: "Massachusetts",
   serviceAreaPhrase: "Greater Boston",
-  // TODO: confirm Boston hours (Raleigh is Mon–Sat 7 AM – 6 PM, Sunday by appointment).
-  hours: "TODO_HOURS",
+  hours: "Mon–Sat, 7 AM – 6 PM",
   /** schema.org openingHoursSpecification, kept in sync with `hours`. */
-  hoursSchema: [] as { days: string[]; opens: string; closes: string }[],
+  hoursSchema: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "07:00",
+      closes: "18:00",
+    },
+  ] as { days: string[]; opens: string; closes: string }[],
   /** TODO: Boston Google Business Profile, if one exists. Falls back to the existing Eastwick profile. */
   googleReviewsUrl:
     "https://www.google.com/search?q=eastwick+external+services#lrd=0x4aabce71a76b6ee5:0x689c38b3508c78de,1",
